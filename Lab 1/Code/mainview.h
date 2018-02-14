@@ -1,4 +1,4 @@
-#ifndef MAINVIEW_H
+﻿#ifndef MAINVIEW_H
 #define MAINVIEW_H
 
 #include "model.h"
@@ -13,6 +13,7 @@
 #include <QVector3D>
 #include <memory>
 
+#include <vector>
 #include "vertex.h"
 #include "geometry.h"
 
@@ -22,7 +23,11 @@ class MainView : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
     QOpenGLDebugLogger *debugLogger;
     QTimer timer; // timer used for animation
 
+    // The shader program.
     QOpenGLShaderProgram shaderProgram;
+
+    // The translation matrix.
+    QMatrix4x4 cubeMat, pyrMat;
 
 
 public:
@@ -38,6 +43,9 @@ public:
     void setRotation(int rotateX, int rotateY, int rotateZ);
     void setScale(int scale);
     void setShadingMode(ShadingMode shading);
+
+    // Functions for setting up objects to be rendered.
+    void setupVertexObject(GLuint *vbo, GLuint *vao, std::vector<vertex> dataVector);
 
 protected:
     void initializeGL();
@@ -63,6 +71,7 @@ private:
 
     // VBO, VAO.
     GLuint cube_vbo, cube_vao, py_vbo, py_vao;
+    GLuint uniLoc;
 
 };
 

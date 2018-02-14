@@ -14,6 +14,8 @@ MainView::MainView(QWidget *parent) : QOpenGLWidget(parent) {
     qDebug() << "MainView constructor";
 
     connect(&timer, SIGNAL(timeout()), this, SLOT(update()));
+    cubeMat.translate({0.5,0,0});
+    pyrMat.translate({-0.5,0,0});
 }
 
 /**
@@ -71,88 +73,70 @@ void MainView::initializeGL() {
     createShaderProgram();
 }
 
+void MainView::setupVertexObject(GLuint *vbo, GLuint *vao, std::vector<vertex> dataVector) {
+
+    // 1. Initialize VBO and VAO.
+    glGenBuffers(1, vbo);
+    glGenVertexArrays(1, vao);
+
+    // 2. Bind the vertex array and buffer.
+    glBindVertexArray(*vao);
+    glBindBuffer(GL_ARRAY_BUFFER, *vbo);
+
+    // 3. Enable both attributes of vertex coord(x,y,z) and color(r,g,b).
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+
+    // 4. Describe the data layout.
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), (GLvoid *)0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), (GLvoid *)(3 * sizeof(GLfloat)));
+
+    // 5. Upload the data: Use &<name>[0] for std::vector data.
+    glBufferData(GL_ARRAY_BUFFER, (dataVector.size() * sizeof(vertex)), &dataVector[0], GL_STATIC_DRAW);
+}
+
 void MainView::createShaderProgram()
 {
-    // 1. Initialize shader program.
-    //shaderProgram = new QOpenGLShaderProgram();
+    // 1. Add vertex and fragment shaders.
+    shaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/shaders/vertshader.glsl");
+    shaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shaders/fragshader.glsl");
 
-    // 2. Add vertex and fragment shaders.
-    shaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex,
-                                           ":/shaders/vertshader.glsl");
-    shaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment,
-                                           ":/shaders/fragshader.glsl");
-
-    // 3. Compile with link.
+    // 2. Compile the shader with link. Then activate the shader with bind.
     shaderProgram.link();
-
-    // 4. Activate shader with bind.
     shaderProgram.bind();
 
-    // 5. Initialize the cube.
-    vertex cube[36], *cp = cube;
+    // *************************************************************************
 
-    vertex a1 = newVertex(-0.1, 0.25, -0.25,   1,0,0);
-    vertex a2 = newVertex(-0.6, 0.25,  0.25,   0,0,1);
-    vertex a3 = newVertex(-0.1, 0.25, -0.25,   0,1,0);
-    vertex a4 = newVertex(-0.6, 0.25, -0.25,   1,1,0);
+    // 3. Create the cube.
+    std::vector<vertex> front = newFace(newVertex(-0.5, 0.5, -0.5, 1, 0, 0),
+                                        newVertex(-0.5, -0.5, -0.5, 0, 1, 0),
+                                        newVertex(0.5, -0.5, -0.5, 0, 0, 1),
+                                        newVertex(0.5, 0.5, -0.5, 1, 1, 0));
+    std::vector<vertex> back =  newFace(newVertex(0.5, 0.5, 0.5, 0, 1, 1),
+                                        newVertex(0.5, -0.5, 0.5, 1, 0, 1),
+                                        newVertex(-0.5, -0.5, 0.5, 0.5, 1, 0.5),
+                                        newVertex(-0.5, 0.5, 0.5, 1, 0.5, 1));
 
-    vertex b1 = newVertex(-0.1,-0.5,-0.25,    1,0,1);
-    vertex b2 = newVertex(-0.6,-0.5,-0.25,     0,1,1);
-    vertex b3 = newVertex(-0.6,-0.5,0.25,     1,1,1);
-    vertex b4 = newVertex(-0.1,-0.5,0.25,    0,0,0);
+    // *. Note: Supply newCube with only four points. It constructs the rest.
+    //          Using newQuad automatically produces 6 points!
+    std::vector<vertex> cube = newCube(front, back);
 
-    setCube(cp, a1,a2,a3,a4, b1,b2,b3,b4);
-//    for(int i = 0; i < 36; i++)
-//{    qDebug() << "Cube x coord " << cp[i].x;}
-    // 6. Initialize the pyramid.
-    vertex pyramid[18], *pp = pyramid;
+    // 4. Setup the cube.
+    this->setupVertexObject(&cube_vbo, &cube_vao, cube);
 
-    vertex tip = newVertex(0.25,0.25,0,       1,0,1);
+    // 5. Create the pyramid.
+    std::vector<vertex> base = newFace(newVertex(-0.5, -0.5, -0.5, 0.3, 0, 1),
+                                      newVertex(0.5, -0.5, -0.5, 0.2, 1, 0.7),
+                                      newVertex(0.5, -0.5, 0.5, 0.8, 0, 1),
+                                      newVertex(-0.5, -0.5, 0.5, 1, 0.2, 0.6));
+    vertex crown = newVertex(0, 0.75, 0, 1, 0.2, 0.4);
 
-    vertex p1 = newVertex(0,-0.5,-0.5,        1,0,0);
-    vertex p2 = newVertex(0.5,-0.5,-0.5,      0,1,0);
-    vertex p3 = newVertex(0.5,-0.5,0.5,       0,0,1);
-    vertex p4 = newVertex(0,-0.5,0.5,         1,1,0);
+    std::vector<vertex> pyramid = newPyramid(base, crown);
 
-    setPyramid(pp,p1,p3,p2,p4,tip);
+    // 6. Setup the pyramid.
+    this->setupVertexObject(&py_vbo, &py_vao, pyramid);
 
-
-    // 6. Create VBOs.
-    glGenBuffers(1, &cube_vbo);
-    glGenBuffers(1, &py_vbo);
-
-    // 7. Create VAOs.
-    glGenVertexArrays(1, &cube_vao);
-    glGenVertexArrays(1, &py_vao);
-
-    // 8. Bind vertex arrays.
-    glBindVertexArray(cube_vao);
-    glBindBuffer(GL_ARRAY_BUFFER, cube_vbo);
-
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), (void *)0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), (void *)(3 * sizeof(GLfloat)));
-
-    // 9. Bind the buffers.
-
-
-
-    // 10. Upload the cube and pyramid vertex data.
-    glBufferData(GL_ARRAY_BUFFER, (36 * sizeof(vertex)), cp, GL_STATIC_DRAW);
-
-
-    glBindVertexArray(py_vao);
-    glBindBuffer(GL_ARRAY_BUFFER, py_vbo);
-    glBufferData(GL_ARRAY_BUFFER, (18 * sizeof(vertex)), pp, GL_STATIC_DRAW);
-
-    // 11. Enable vertex attribute arrays (position, color).
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
-
-    // 12. Call.
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), (void *)0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), (void *)(3 * sizeof(GLfloat)));
+    //uniLoc = shaderProgram.uniformLocation("modelTransform");
 }
 
 // --- OpenGL drawing
@@ -170,14 +154,15 @@ void MainView::paintGL() {
 
     shaderProgram.bind();
 
+    //glUniformMatrix4fv(uniLoc, 1, GL_FALSE, cubeMat.data());
+
     // Draw Cube
     glBindVertexArray(this->cube_vao);
     glDrawArrays(GL_TRIANGLES, 0, 36);
 
-    // Draw Pyramid.
+    // Draw Pyramid
     glBindVertexArray(this->py_vao);
     glDrawArrays(GL_TRIANGLES, 0, 18);
-
 
     shaderProgram.release();
 }

@@ -1,15 +1,23 @@
 #ifndef GEOMETRY_H
 #define GEOMETRY_H
 
+#include <vector>
+#include <QOpenGLDebugLogger>
 #include "vertex.h"
 
-/* Returns a new quad given the corners. */
-vertex *setQuad (vertex *quad, vertex topLeft, vertex bottomLeft, vertex topRight, vertex bottomRight);
+/* Returns a vector of four vertices representing a face. */
+std::vector<vertex> newFace (vertex topLeft, vertex bottomLeft, vertex topRight, vertex bottomRight);
 
+/* Returns a vector of six vertices representing a quad/face. Vertices are ordered counter-clockwise. */
+std::vector<vertex> newQuad (vertex topLeft, vertex bottomLeft, vertex topRight, vertex bottomRight);
 
-/* Returns a cube given two faces (a = points of face 1, b = points of face 2) */
-void setCube (vertex *cp, vertex a1, vertex a2, vertex a3, vertex a4, vertex b1, vertex b2, vertex b3, vertex b4);
+/* Returns a vector of thirty-six verticies representing a cube. Verticies ordered counter-clockwise per face. */
+std::vector<vertex> newCube (std::vector<vertex> front, std::vector<vertex> back);
 
-void setPyramid (vertex *pp, vertex a1, vertex a2, vertex a3, vertex a4, vertex tip);
+/* Returns a vector of eightteen vertices representing a pyramid. Vertices are ordered counter-clockwise. */
+std::vector<vertex> newPyramid (std::vector<vertex> base, vertex crown);
+
+/* Displays the coordinates within a vector nicely */
+void showVector (std::vector<vertex> v);
 
 #endif // GEOMETRY_H
