@@ -62,7 +62,7 @@ private:
     void createShaderProgram();
 
     // VBO, VAO.
-    GLuint vbo, vao;
+    GLuint cube_vbo, cube_vao, py_vbo, py_vao;
 
 };
 

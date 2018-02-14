@@ -10,4 +10,6 @@ vertex *setQuad (vertex *quad, vertex topLeft, vertex bottomLeft, vertex topRigh
 /* Returns a cube given two faces (a = points of face 1, b = points of face 2) */
 void setCube (vertex *cp, vertex a1, vertex a2, vertex a3, vertex a4, vertex b1, vertex b2, vertex b3, vertex b4);
 
+void setPyramid (vertex *pp, vertex a1, vertex a2, vertex a3, vertex a4, vertex tip);
+
 #endif // GEOMETRY_H

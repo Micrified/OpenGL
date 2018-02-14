@@ -91,32 +91,60 @@ void MainView::createShaderProgram()
     // 5. Initialize the cube.
     vertex cube[36], *cp = cube;
 
-    vertex a1 = newVertex(-0.5,-0.5,-0.5,1,0,0);
-    vertex a2 = newVertex(0.5,-0.5,-0.5,1,0,0);
-    vertex a3 = newVertex(-0.5,0.5,-0.5,1,0,0);
-    vertex a4 = newVertex(0.5,0.5,-0.5,1,0,0);
+    vertex a1 = newVertex(-0.1, 0.25, -0.25,   1,0,0);
+    vertex a2 = newVertex(-0.6, 0.25,  0.25,   0,0,1);
+    vertex a3 = newVertex(-0.1, 0.25, -0.25,   0,1,0);
+    vertex a4 = newVertex(-0.6, 0.25, -0.25,   1,1,0);
 
-    vertex b1 = newVertex(-1,-1,1,0,1,0);
-    vertex b2 = newVertex(1,-1,1,0,1,0);
-    vertex b3 = newVertex(-1,1,1,0,1,0);
-    vertex b4 = newVertex(1,1,1,0,1,0);
+    vertex b1 = newVertex(-0.1,-0.5,-0.25,    1,0,1);
+    vertex b2 = newVertex(-0.6,-0.5,-0.25,     0,1,1);
+    vertex b3 = newVertex(-0.6,-0.5,0.25,     1,1,1);
+    vertex b4 = newVertex(-0.1,-0.5,0.25,    0,0,0);
 
     setCube(cp, a1,a2,a3,a4, b1,b2,b3,b4);
+//    for(int i = 0; i < 36; i++)
+//{    qDebug() << "Cube x coord " << cp[i].x;}
+    // 6. Initialize the pyramid.
+    vertex pyramid[18], *pp = pyramid;
 
-    // 6. Create VBO.
-    glGenBuffers(1, &(this->vbo));
+    vertex tip = newVertex(0.25,0.25,0,       1,0,1);
 
-    // 7. Create VAO.
-    glGenVertexArrays(1, &(this->vao));
+    vertex p1 = newVertex(0,-0.5,-0.5,        1,0,0);
+    vertex p2 = newVertex(0.5,-0.5,-0.5,      0,1,0);
+    vertex p3 = newVertex(0.5,-0.5,0.5,       0,0,1);
+    vertex p4 = newVertex(0,-0.5,0.5,         1,1,0);
 
-    // 8. Bind vertex array.
-    glBindVertexArray(this->vao);
+    setPyramid(pp,p1,p3,p2,p4,tip);
 
-    // 9. Bind the buffer.
-    glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
 
-    // 10. Upload the vertex data.
+    // 6. Create VBOs.
+    glGenBuffers(1, &cube_vbo);
+    glGenBuffers(1, &py_vbo);
+
+    // 7. Create VAOs.
+    glGenVertexArrays(1, &cube_vao);
+    glGenVertexArrays(1, &py_vao);
+
+    // 8. Bind vertex arrays.
+    glBindVertexArray(cube_vao);
+    glBindBuffer(GL_ARRAY_BUFFER, cube_vbo);
+
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), (void *)0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), (void *)(3 * sizeof(GLfloat)));
+
+    // 9. Bind the buffers.
+
+
+
+    // 10. Upload the cube and pyramid vertex data.
     glBufferData(GL_ARRAY_BUFFER, (36 * sizeof(vertex)), cp, GL_STATIC_DRAW);
+
+
+    glBindVertexArray(py_vao);
+    glBindBuffer(GL_ARRAY_BUFFER, py_vbo);
+    glBufferData(GL_ARRAY_BUFFER, (18 * sizeof(vertex)), pp, GL_STATIC_DRAW);
 
     // 11. Enable vertex attribute arrays (position, color).
     glEnableVertexAttribArray(0);
@@ -136,13 +164,20 @@ void MainView::createShaderProgram()
  *
  */
 void MainView::paintGL() {
+
     // Clear the screen before rendering
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     shaderProgram.bind();
 
-    // Draw here
+    // Draw Cube
+    glBindVertexArray(this->cube_vao);
     glDrawArrays(GL_TRIANGLES, 0, 36);
+
+    // Draw Pyramid.
+    glBindVertexArray(this->py_vao);
+    glDrawArrays(GL_TRIANGLES, 0, 18);
+
 
     shaderProgram.release();
 }
