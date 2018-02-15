@@ -26,10 +26,6 @@ class MainView : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
     // The shader program.
     QOpenGLShaderProgram shaderProgram;
 
-    // The translation matrix.
-    QMatrix4x4 cubeMat, pyrMat;
-
-
 public:
     enum ShadingMode : GLuint
     {
@@ -69,10 +65,32 @@ private slots:
 private:
     void createShaderProgram();
 
-    // VBO, VAO.
-    GLuint cube_vbo, cube_vao, py_vbo, py_vao;
-    GLuint uniLoc;
+    // *******************************************
 
+    // Cube VBO & VAO.
+    GLuint cube_vbo, cube_vao;
+
+    // Cube Translation Matrix.
+    QMatrix4x4 cubeTranslationMatrix;
+
+    // *******************************************
+
+    // Pyramid VBO & VAO.
+    GLuint py_vbo, py_vao;
+
+    // Pyramid Translation Matrix.
+    QMatrix4x4 pyramidTranslationMatrix;
+
+    // *******************************************
+
+    // Matrix for perspective.
+    QMatrix4x4 perspectiveMatrix;
+
+    // Perspective Location (for sending perspective to shader).
+    GLuint perspectiveLocation;
+
+    // Uniform Location (for sending transforms to shader).
+    GLuint uniformLocation;
 };
 
 #endif // MAINVIEW_H

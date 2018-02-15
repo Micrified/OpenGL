@@ -12,10 +12,8 @@
  */
 MainView::MainView(QWidget *parent) : QOpenGLWidget(parent) {
     qDebug() << "MainView constructor";
-
     connect(&timer, SIGNAL(timeout()), this, SLOT(update()));
-    cubeMat.translate({0.5,0,0});
-    pyrMat.translate({-0.5,0,0});
+
 }
 
 /**
@@ -105,9 +103,30 @@ void MainView::createShaderProgram()
     shaderProgram.link();
     shaderProgram.bind();
 
+    // 3. Initialize the uniformLocation to be able to do transformations.
+    uniformLocation = shaderProgram.uniformLocation("modelTransform");
+
+    // 4. Initialize the perspective to be able to adjust perspective.
+    perspectiveLocation = shaderProgram.uniformLocation("perspective");
+
+    // 5. Setup our transforms & perspective.
+    cubeTranslationMatrix.translate({0,0,2});
+    pyramidTranslationMatrix.translate({0,-1,0});
+    float n = 0.1;
+    float f = -1.5;
+    float l = -1.0;
+    float r = 1.0;
+    float t = 1.0;
+    float b = -1.0;
+
+    perspectiveMatrix = QMatrix4x4((2.0 / (r - l)), 0, 0, -((r + l)/(r - l)),
+                                   0, (2.0/(t - b)), 0, -((t + b)/(t - b)),
+                                   0, 0, (2.0/(n - f)), -((f + n) / (f - n)),
+                                   0, 0, 0, 1);
+
     // *************************************************************************
 
-    // 3. Create the cube.
+    // Create the cube.
     std::vector<vertex> front = newFace(newVertex(-0.5, 0.5, -0.5, 1, 0, 0),
                                         newVertex(-0.5, -0.5, -0.5, 0, 1, 0),
                                         newVertex(0.5, -0.5, -0.5, 0, 0, 1),
@@ -116,27 +135,21 @@ void MainView::createShaderProgram()
                                         newVertex(0.5, -0.5, 0.5, 1, 0, 1),
                                         newVertex(-0.5, -0.5, 0.5, 0.5, 1, 0.5),
                                         newVertex(-0.5, 0.5, 0.5, 1, 0.5, 1));
-
-    // *. Note: Supply newCube with only four points. It constructs the rest.
-    //          Using newQuad automatically produces 6 points!
     std::vector<vertex> cube = newCube(front, back);
 
-    // 4. Setup the cube.
+    // Setup the cube.
     this->setupVertexObject(&cube_vbo, &cube_vao, cube);
 
-    // 5. Create the pyramid.
+    // Create the pyramid.
     std::vector<vertex> base = newFace(newVertex(-0.5, -0.5, -0.5, 0.3, 0, 1),
                                       newVertex(0.5, -0.5, -0.5, 0.2, 1, 0.7),
                                       newVertex(0.5, -0.5, 0.5, 0.8, 0, 1),
                                       newVertex(-0.5, -0.5, 0.5, 1, 0.2, 0.6));
     vertex crown = newVertex(0, 0.75, 0, 1, 0.2, 0.4);
-
     std::vector<vertex> pyramid = newPyramid(base, crown);
 
-    // 6. Setup the pyramid.
+    // Setup the pyramid.
     this->setupVertexObject(&py_vbo, &py_vao, pyramid);
-
-    //uniLoc = shaderProgram.uniformLocation("modelTransform");
 }
 
 // --- OpenGL drawing
@@ -154,11 +167,23 @@ void MainView::paintGL() {
 
     shaderProgram.bind();
 
-    //glUniformMatrix4fv(uniLoc, 1, GL_FALSE, cubeMat.data());
+    // Setup perspective.
+    glUniformMatrix4fv(perspectiveLocation, 1, GL_FALSE, perspectiveMatrix.data());
+
+    /******************************************************/
+
+    // Setup Cube Transformation.
+    glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, cubeTranslationMatrix.data());
 
     // Draw Cube
     glBindVertexArray(this->cube_vao);
     glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+    /******************************************************/
+
+    // Setup Pyramid Transformation.
+    glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, pyramidTranslationMatrix.data());
 
     // Draw Pyramid
     glBindVertexArray(this->py_vao);

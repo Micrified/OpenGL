@@ -1,14 +1,14 @@
 #include "geometry.h"
 
 /* Returns a vector of four vertices representing a face. */
-std::vector<vertex> newFace (vertex topLeft, vertex bottomLeft, vertex topRight, vertex bottomRight) {
+std::vector<vertex> newFace (vertex topLeft, vertex bottomLeft, vertex bottomRight, vertex topRight) {
     std::vector<vertex> f(4);
     f[0] = topLeft; f[1] = bottomLeft; f[2] = bottomRight; f[3] = topRight;
     return f;
 }
 
 /* Returns a vector of six vertices representing a quad/face. Vertices are ordered counter-clockwise. */
-std::vector<vertex> newQuad (vertex topLeft, vertex bottomLeft, vertex topRight, vertex bottomRight) {
+std::vector<vertex> newQuad (vertex topLeft, vertex bottomLeft, vertex bottomRight, vertex topRight) {
     std::vector<vertex> q(6);
     q[0] = topRight; q[1] = topLeft; q[2] = bottomLeft;         // Triangle 1.
     q[3] = topRight; q[4] = bottomLeft; q[5] = bottomRight;     // Triangle 2.
