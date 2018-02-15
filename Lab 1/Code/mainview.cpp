@@ -110,19 +110,11 @@ void MainView::createShaderProgram()
     perspectiveLocation = shaderProgram.uniformLocation("perspective");
 
     // 5. Setup our transforms & perspective.
-    cubeTranslationMatrix.translate({0,0,2});
-    pyramidTranslationMatrix.translate({0,-1,0});
-    float n = 0.1;
-    float f = -1.5;
-    float l = -1.0;
-    float r = 1.0;
-    float t = 1.0;
-    float b = -1.0;
+    cubeTranslationMatrix.translate({-2,1,-6});
+    pyramidTranslationMatrix.translate({-2,0,-6});
 
-    perspectiveMatrix = QMatrix4x4((2.0 / (r - l)), 0, 0, -((r + l)/(r - l)),
-                                   0, (2.0/(t - b)), 0, -((t + b)/(t - b)),
-                                   0, 0, (2.0/(n - f)), -((f + n) / (f - n)),
-                                   0, 0, 0, 1);
+    // 6. Setup our perspective.
+    perspectiveMatrix.perspective(60.0, width()/height(), 0.1, 10.0);
 
     // *************************************************************************
 
@@ -203,8 +195,10 @@ void MainView::paintGL() {
 void MainView::resizeGL(int newWidth, int newHeight) 
 {
     // TODO: Update projection to fit the new aspect ratio
-    Q_UNUSED(newWidth)
-    Q_UNUSED(newHeight)
+    perspectiveMatrix.setToIdentity();
+    perspectiveMatrix.perspective(60.0, ((float)newWidth/(float)newHeight), 0.1, 10.0);
+
+    qDebug() << "Perspective changed to (" << newWidth << "," << newHeight << ")";
 }
 
 // --- Public interface

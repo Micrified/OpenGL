@@ -10,8 +10,8 @@ std::vector<vertex> newFace (vertex topLeft, vertex bottomLeft, vertex bottomRig
 /* Returns a vector of six vertices representing a quad/face. Vertices are ordered counter-clockwise. */
 std::vector<vertex> newQuad (vertex topLeft, vertex bottomLeft, vertex bottomRight, vertex topRight) {
     std::vector<vertex> q(6);
-    q[0] = topRight; q[1] = topLeft; q[2] = bottomLeft;         // Triangle 1.
-    q[3] = topRight; q[4] = bottomLeft; q[5] = bottomRight;     // Triangle 2.
+    q[0] = topLeft; q[1] = topRight; q[2] = bottomLeft;         // Triangle 1.
+    q[3] = bottomLeft; q[4] = topRight; q[5] = bottomRight;     // Triangle 2.
     return q;
 }
 
@@ -48,10 +48,10 @@ std::vector<vertex> newPyramid (std::vector<vertex> base, vertex crown) {
 
     // Create and insert Base. Then just insert Left, Right, Front, Back triangles.
     std::vector<vertex> bottomQuad = newQuad(base[0], base[1], base[2], base[3]); pyramid.insert(pyramid.end(), bottomQuad.begin(), bottomQuad.end());
-    pyramid.push_back(crown); pyramid.push_back(base[1]); pyramid.push_back(base[2]);   // Front.
-    pyramid.push_back(crown); pyramid.push_back(base[3]); pyramid.push_back(base[0]);   // Back.
-    pyramid.push_back(crown); pyramid.push_back(base[0]); pyramid.push_back(base[1]);   // Left.
-    pyramid.push_back(crown); pyramid.push_back(base[2]); pyramid.push_back(base[3]);   // Right.
+    pyramid.push_back(crown); pyramid.push_back(base[2]); pyramid.push_back(base[1]);   // Front.
+    pyramid.push_back(crown); pyramid.push_back(base[0]); pyramid.push_back(base[3]);   // Back.
+    pyramid.push_back(crown); pyramid.push_back(base[1]); pyramid.push_back(base[0]);   // Left.
+    pyramid.push_back(crown); pyramid.push_back(base[3]); pyramid.push_back(base[2]);   // Right.
 
     return pyramid;
 }
