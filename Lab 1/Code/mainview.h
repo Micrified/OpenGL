@@ -83,6 +83,12 @@ private:
 
     // *******************************************
 
+    // Matrix for rotation.
+    QMatrix4x4 rotationMatrix;
+
+    // Matrix for scaling
+    QMatrix4x4 scaleMatrix;
+
     // Matrix for perspective.
     QMatrix4x4 perspectiveMatrix;
 
@@ -91,6 +97,9 @@ private:
 
     // Uniform Location (for sending transforms to shader).
     GLuint uniformLocation;
+
+    // Uniform Rotation and Scale Locations (for sending transforms to shader).
+    GLuint rotationLocation, scaleLocation;
 };
 
 #endif // MAINVIEW_H

@@ -106,12 +106,16 @@ void MainView::createShaderProgram()
     // 3. Initialize the uniformLocation to be able to do transformations.
     uniformLocation = shaderProgram.uniformLocation("modelTransform");
 
+    rotationLocation = shaderProgram.uniformLocation("rotation");
+    scaleLocation = shaderProgram.uniformLocation("scale");
+
     // 4. Initialize the perspective to be able to adjust perspective.
     perspectiveLocation = shaderProgram.uniformLocation("perspective");
 
     // 5. Setup our transforms & perspective.
-    cubeTranslationMatrix.translate({-2,1,-6});
+    cubeTranslationMatrix.translate({2,0,-6});
     pyramidTranslationMatrix.translate({-2,0,-6});
+
 
     // 6. Setup our perspective.
     perspectiveMatrix.perspective(60.0, width()/height(), 0.1, 10.0);
@@ -119,25 +123,25 @@ void MainView::createShaderProgram()
     // *************************************************************************
 
     // Create the cube.
-    std::vector<vertex> front = newFace(newVertex(-0.5, 0.5, -0.5, 1, 0, 0),
-                                        newVertex(-0.5, -0.5, -0.5, 0, 1, 0),
-                                        newVertex(0.5, -0.5, -0.5, 0, 0, 1),
-                                        newVertex(0.5, 0.5, -0.5, 1, 1, 0));
-    std::vector<vertex> back =  newFace(newVertex(0.5, 0.5, 0.5, 0, 1, 1),
-                                        newVertex(0.5, -0.5, 0.5, 1, 0, 1),
-                                        newVertex(-0.5, -0.5, 0.5, 0.5, 1, 0.5),
-                                        newVertex(-0.5, 0.5, 0.5, 1, 0.5, 1));
+    std::vector<vertex> front = newFace(newVertex(-1, 1, -1, 1, 0, 0),
+                                        newVertex(-1, -1, -1, 0, 1, 0),
+                                        newVertex(1, -1, -1, 0, 0, 1),
+                                        newVertex(1, 1, -1, 1, 1, 0));
+    std::vector<vertex> back =  newFace(newVertex(1, 1, 1, 0, 1, 1),
+                                        newVertex(1, -1, 1, 1, 0, 1),
+                                        newVertex(-1, -1, 1, 0.5, 1, 0.5),
+                                        newVertex(-1, 1, 1, 1, 0.5, 1));
     std::vector<vertex> cube = newCube(front, back);
 
     // Setup the cube.
     this->setupVertexObject(&cube_vbo, &cube_vao, cube);
 
     // Create the pyramid.
-    std::vector<vertex> base = newFace(newVertex(-0.5, -0.5, -0.5, 0.3, 0, 1),
-                                      newVertex(0.5, -0.5, -0.5, 0.2, 1, 0.7),
-                                      newVertex(0.5, -0.5, 0.5, 0.8, 0, 1),
-                                      newVertex(-0.5, -0.5, 0.5, 1, 0.2, 0.6));
-    vertex crown = newVertex(0, 0.75, 0, 1, 0.2, 0.4);
+    std::vector<vertex> base = newFace(newVertex(-1, -1, -1, 0.3, 0, 1),
+                                      newVertex(1, -1, -1, 0.2, 1, 0.7),
+                                      newVertex(1, -1, 1, 0.8, 0, 1),
+                                      newVertex(-1, -1, 1, 1, 0.2, 0.6));
+    vertex crown = newVertex(0, 1, 0, 1, 0.2, 0.4);
     std::vector<vertex> pyramid = newPyramid(base, crown);
 
     // Setup the pyramid.
@@ -161,6 +165,12 @@ void MainView::paintGL() {
 
     // Setup perspective.
     glUniformMatrix4fv(perspectiveLocation, 1, GL_FALSE, perspectiveMatrix.data());
+
+    // Setup rotation.
+    glUniformMatrix4fv(rotationLocation, 1, GL_FALSE, rotationMatrix.data());
+
+    // Setup scale.
+    glUniformMatrix4fv(scaleLocation, 1, GL_FALSE, scaleMatrix.data());
 
     /******************************************************/
 
@@ -206,13 +216,19 @@ void MainView::resizeGL(int newWidth, int newHeight)
 void MainView::setRotation(int rotateX, int rotateY, int rotateZ)
 {
     qDebug() << "Rotation changed to (" << rotateX << "," << rotateY << "," << rotateZ << ")";
-    Q_UNIMPLEMENTED();
+    rotationMatrix.setToIdentity();
+    rotationMatrix.rotate((float)rotateX, 1.0, 0, 0);
+    rotationMatrix.rotate((float)rotateY, 0, 1.0, 0);
+    rotationMatrix.rotate((float)rotateZ, 0, 0, 1.0);
+    update();
 }
 
 void MainView::setScale(int scale)
 {
     qDebug() << "Scale changed to " << scale;
-    Q_UNIMPLEMENTED();
+    scaleMatrix.setToIdentity();
+    scaleMatrix.scale((float)scale/100);
+    update();
 }
 
 void MainView::setShadingMode(ShadingMode shading)

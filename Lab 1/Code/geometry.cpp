@@ -47,7 +47,7 @@ std::vector<vertex> newPyramid (std::vector<vertex> base, vertex crown) {
     }
 
     // Create and insert Base. Then just insert Left, Right, Front, Back triangles.
-    std::vector<vertex> bottomQuad = newQuad(base[0], base[1], base[2], base[3]); pyramid.insert(pyramid.end(), bottomQuad.begin(), bottomQuad.end());
+    std::vector<vertex> bottomQuad = newQuad(base[3], base[2], base[1], base[0]); pyramid.insert(pyramid.end(), bottomQuad.begin(), bottomQuad.end());
     pyramid.push_back(crown); pyramid.push_back(base[2]); pyramid.push_back(base[1]);   // Front.
     pyramid.push_back(crown); pyramid.push_back(base[0]); pyramid.push_back(base[3]);   // Back.
     pyramid.push_back(crown); pyramid.push_back(base[1]); pyramid.push_back(base[0]);   // Left.

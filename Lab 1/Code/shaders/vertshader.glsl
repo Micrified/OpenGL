@@ -10,6 +10,12 @@ layout (location = 1) in vec3 vertColor_in;
 // Specify the Uniforms of the vertex shader
 uniform mat4 modelTransform;
 
+// Specify the rotations of the vertex shader
+uniform mat4 rotation;
+
+// Specify the scaling of the vertex shader
+uniform mat4 scale;
+
 // Specify the Perspectives of the vertex shader
 uniform mat4 perspective;
 
@@ -19,7 +25,7 @@ out vec3 vertColor;
 void main()
 {
     // gl_Position is the output (a vec4) of the vertex shader
-    gl_Position = perspective * modelTransform * vec4(vertCoordinates_in, 1.0);
+    gl_Position = perspective * modelTransform * scale * rotation * vec4(vertCoordinates_in, 1.0);
 
     vertColor = vertColor_in;
 }
