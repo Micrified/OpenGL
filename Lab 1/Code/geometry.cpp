@@ -1,5 +1,31 @@
 #include "geometry.h"
 
+float max (float a, float b) {
+    return (a > b ? a : b);
+}
+
+float min (float a, float b) {
+    return (a < b ? a : b);
+}
+
+float abs (float a) {
+    return (a < 0 ? -a : a);
+}
+
+std::vector<vertex> vectorFrom3D(QVector<QVector3D> v, float scale) {
+    std::vector<vertex> q;
+    QVector3D *data = v.data(); q.reserve(v.size());
+
+    for (int i = 0; i < v.size(); i++) {
+        float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+        float g = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+        float b = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+        q.push_back(newVertex(data[i].x() * scale, data[i].y() * scale, data[i].z() * scale, r, g, b));
+    }
+
+    return q;
+}
+
 /* Returns a vector of four vertices representing a face. */
 std::vector<vertex> newFace (vertex topLeft, vertex bottomLeft, vertex bottomRight, vertex topRight) {
     std::vector<vertex> f(4);

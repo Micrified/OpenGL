@@ -83,6 +83,17 @@ private:
 
     // *******************************************
 
+    // Sphere vertex count.
+    GLuint sphereVertexCount;
+
+    // Sphere VBO and VAO.
+    GLuint sphere_vbo, sphere_vao;
+
+    // Mesh Translation Matrix.
+    QMatrix4x4 sphereTranslationMatrix;
+
+    // *******************************************
+
     // Matrix for rotation.
     QMatrix4x4 rotationMatrix;
 

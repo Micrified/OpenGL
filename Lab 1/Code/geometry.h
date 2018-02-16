@@ -1,9 +1,14 @@
 #ifndef GEOMETRY_H
 #define GEOMETRY_H
 
+#include <QVector3D>
 #include <vector>
 #include <QOpenGLDebugLogger>
+#include <cstdlib>
 #include "vertex.h"
+
+/* Converts a QVector3D object into a vertex vector and adds a color component. */
+std::vector<vertex> vectorFrom3D(QVector<QVector3D> v, float scale);
 
 /* Returns a vector of four vertices representing a face. */
 std::vector<vertex> newFace (vertex topLeft, vertex bottomLeft, vertex topRight, vertex bottomRight);

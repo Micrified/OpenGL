@@ -115,10 +115,25 @@ void MainView::createShaderProgram()
     // 5. Setup our transforms & perspective.
     cubeTranslationMatrix.translate({2,0,-6});
     pyramidTranslationMatrix.translate({-2,0,-6});
-
+    sphereTranslationMatrix.translate({0,0,-10});
 
     // 6. Setup our perspective.
     perspectiveMatrix.perspective(60.0, width()/height(), 0.1, 10.0);
+
+    // *************************************************************************
+
+    // Load in the mesh.
+    Model mesh = Model(":models/sphere.obj");
+
+    // Create the sphere.
+    std::vector<vertex> sphere = vectorFrom3D(mesh.getVertices(), 0.04);
+
+    // Set the vertex count.
+    sphereVertexCount = sphere.size();
+
+    // Setup the sphere.
+    this->setupVertexObject(&sphere_vbo, &sphere_vao, sphere);
+
 
     // *************************************************************************
 
@@ -171,6 +186,17 @@ void MainView::paintGL() {
 
     // Setup scale.
     glUniformMatrix4fv(scaleLocation, 1, GL_FALSE, scaleMatrix.data());
+
+    /******************************************************/
+
+    // Setup Sphere Transformation.
+    glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, sphereTranslationMatrix.data());
+
+    // Scale Sphere Down.
+
+    // Draw sphere.
+    glBindVertexArray(this->sphere_vao);
+    glDrawArrays(GL_TRIANGLES, 0, sphereVertexCount);
 
     /******************************************************/
 
