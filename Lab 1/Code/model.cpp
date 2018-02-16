@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QFile>
 #include <QTextStream>
+#include <cmath>
 
 // A Private Vertex class for vertex comparison
 // DO NOT include "vertex.h" or something similar in this file
@@ -80,7 +81,9 @@ Model::Model(QString filename) {
  * Usefull for models with different scales
  *
  */
-
+//float Model::abs(float a) {
+//    return (a < 0 ? -a : a);
+//}
 
 void Model::unitize() {
 
@@ -91,21 +94,21 @@ void Model::unitize() {
     QVector3D *data = this->vertices.data();
 
     // Initialize variables.
-    float x_max, x_min, y_max, y_min, z_max, z_min;
-    x_max = x_min = data[0].x();
-    y_max = y_min = data[0].y();
-    z_max = z_min = data[0].z();
+    float x_max, y_max, z_max;
+    x_max = data[0].x();
+    y_max = data[0].y();
+    z_max = data[0].z();
 
     // Find max and min for each axis.
     for (int i = 1; i < size; i++) {
         float x = data[i].x(), y = data[i].y(), z = data[i].z();
-        x_max = std::max(x,x_max); x_min = std::min(x,x_min);
-        y_max = std::max(y,y_max); y_min = std::min(y,y_min);
-        z_max = std::max(z,z_max); z_min = std::min(z,z_min);
+        x_max = std::max(std::abs(x),x_max);
+        y_max = std::max(std::abs(y),y_max);
+        z_max = std::max(std::abs(z),z_max);
     }
 
     // Find normalization divisor.
-    float n = std::max(x_max - x_min, std::max(y_max - y_min, z_max - z_min)) / 2;
+    float n = std::max(x_max, std::max(y_max, z_max));
 
     for (int i = 0; i < size; i++) {
         vertices.data()[i].setX(data[i].x() / n);
