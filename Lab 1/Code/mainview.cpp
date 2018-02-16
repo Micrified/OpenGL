@@ -124,9 +124,9 @@ void MainView::createShaderProgram()
 
     // Load in the mesh.
     Model mesh = Model(":models/sphere.obj");
-
+    mesh.unitize();
     // Create the sphere.
-    std::vector<vertex> sphere = vectorFrom3D(mesh.getVertices(), 0.04);
+    std::vector<vertex> sphere = vectorFrom3D(mesh.getVertices(), 1.0);
 
     // Set the vertex count.
     sphereVertexCount = sphere.size();

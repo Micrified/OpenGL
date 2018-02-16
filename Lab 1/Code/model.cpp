@@ -80,8 +80,38 @@ Model::Model(QString filename) {
  * Usefull for models with different scales
  *
  */
+
+
 void Model::unitize() {
-    qDebug() << "TODO: implement this yourself";
+
+    // Get size.
+    int size = this->vertices.size();
+
+    // Get vertex data.
+    QVector3D *data = this->vertices.data();
+
+    // Initialize variables.
+    float x_max, x_min, y_max, y_min, z_max, z_min;
+    x_max = x_min = data[0].x();
+    y_max = y_min = data[0].y();
+    z_max = z_min = data[0].z();
+
+    // Find max and min for each axis.
+    for (int i = 1; i < size; i++) {
+        float x = data[i].x(), y = data[i].y(), z = data[i].z();
+        x_max = std::max(x,x_max); x_min = std::min(x,x_min);
+        y_max = std::max(y,y_max); y_min = std::min(y,y_min);
+        z_max = std::max(z,z_max); z_min = std::min(z,z_min);
+    }
+
+    // Find normalization divisor.
+    float n = std::max(x_max - x_min, std::max(y_max - y_min, z_max - z_min)) / 2;
+
+    for (int i = 0; i < size; i++) {
+        vertices.data()[i].setX(data[i].x() / n);
+        vertices.data()[i].setY(data[i].y() / n);
+        vertices.data()[i].setZ(data[i].z() / n);
+    }
 }
 
 QVector<QVector3D> Model::getVertices() {
@@ -227,7 +257,7 @@ void Model::parseTexture(QStringList tokens) {
 void Model::parseFace(QStringList tokens) {
     QStringList elements;
 
-    for( int i = 1; i != tokens.size(); ++i ) {
+    for(int i = 1; i != tokens.size(); ++i ) {
         elements = tokens[i].split("/");
         // -1 since .obj count from 1
         indices.append(elements[0].toInt()-1);
