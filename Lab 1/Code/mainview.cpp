@@ -27,6 +27,16 @@ MainView::MainView(QWidget *parent) : QOpenGLWidget(parent) {
 MainView::~MainView() {
     debugLogger->stopLogging();
 
+    // 1. Delete the buffers.
+    glDeleteBuffers(1, &cube_vbo);
+    glDeleteBuffers(1, &py_vbo);
+    glDeleteBuffers(1, &sphere_vbo);
+
+    // 2. Delete the vertex arrays.
+    glDeleteVertexArrays(1, &cube_vao);
+    glDeleteVertexArrays(1, &py_vao);
+    glDeleteVertexArrays(1, &sphere_vao);
+
     qDebug() << "MainView destructor";
 }
 
