@@ -10,6 +10,10 @@
 // =============================================================================
 
 #include "shapes/sphere.h"
+#include "shapes/triangle.h"
+#include "shapes/quad.h"
+#include "shapes/plane.h"
+#include "objloader.h"
 
 // =============================================================================
 // -- End of shape includes ----------------------------------------------------
@@ -37,8 +41,28 @@ bool Raytracer::parseObjectNode(json const &node)
         Point pos(node["position"]);
         double radius = node["radius"];
         obj = ObjectPtr(new Sphere(pos, radius));
-    }
-    else
+    } else if (node["type"] == "triangle") 
+    {
+        Point a(node["point_a"]);
+        Point b(node["point_b"]);
+        Point c(node["point_c"]);
+        obj = ObjectPtr(new Triangle(a, b, c));
+    } else if (node["type"] == "plane")
+    {
+        Point a(node["point_a"]);
+        Vector n(node["normal"]);
+        obj = ObjectPtr(new Plane(a,n));
+    } else if (node["type"] == "quad")
+    {
+        Point a(node["point_a"]);
+        Point b(node["point_b"]);
+        Point c(node["point_c"]);
+        Point d(node["point_d"]);
+        obj = ObjectPtr(new Quad(a, b, c, d));
+    } else if (node["type"] == "model"){
+        string a(node["fileName"]);
+        obj = ObjectPtr(new model(a));
+    } else
     {
         cerr << "Unknown object type: " << node["type"] << ".\n";
     }

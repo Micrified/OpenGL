@@ -11,7 +11,10 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/raytracer.cpp" "/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/build/CMakeFiles/ray.dir/Code/raytracer.cpp.o"
   "/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/scene.cpp" "/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/build/CMakeFiles/ray.dir/Code/scene.cpp.o"
   "/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/shapes/example.cpp" "/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/build/CMakeFiles/ray.dir/Code/shapes/example.cpp.o"
+  "/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/shapes/plane.cpp" "/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/build/CMakeFiles/ray.dir/Code/shapes/plane.cpp.o"
+  "/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/shapes/quad.cpp" "/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/build/CMakeFiles/ray.dir/Code/shapes/quad.cpp.o"
   "/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/shapes/sphere.cpp" "/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/build/CMakeFiles/ray.dir/Code/shapes/sphere.cpp.o"
+  "/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/shapes/triangle.cpp" "/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/build/CMakeFiles/ray.dir/Code/shapes/triangle.cpp.o"
   "/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/triple.cpp" "/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/build/CMakeFiles/ray.dir/Code/triple.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")

@@ -53,7 +53,7 @@ Hit Sphere::intersect(Ray const &ray)
     * Insert calculation of the sphere's normal at the intersection point.
     ****************************************************/
 
-    Vector N = Triple(position.x - intPoint.x, position.y - intPoint.y, position.z - intPoint.z);
+    Vector N = Triple(intPoint.x - position.x, intPoint.y - position.y, intPoint.z - position.z);
     N.normalize();
 
     return Hit(d,N);

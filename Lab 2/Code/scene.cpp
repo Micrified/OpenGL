@@ -50,10 +50,24 @@ Color Scene::trace(Ray const &ray)
     *        Color * Color      dito
     *        pow(a,b)           a to the power of b
     ****************************************************/
+    Color diffuse;
+    Color ambient;
+    Color specular;
 
-    Color color = material.color;                  // place holder
+    Color color = material.color;   
 
-    return color;
+    Vector L = lights[0]->position - hit;
+    Vector R = 2 * (L.dot(N)) * N - L;
+    L.normalize();
+    R.normalize();
+
+    diffuse = fmax(0,N.dot(L)) * lights[0]->color * material.kd * color;
+    ambient = color * material.ka;
+    specular = pow(fmax(0, R.dot(V)), material.n) * lights[0]->color * material.ks;
+
+                   // place holder
+
+    return diffuse + ambient + specular;
 }
 
 void Scene::render(Image &img)
