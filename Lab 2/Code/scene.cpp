@@ -15,6 +15,9 @@ Color Scene::trace(Ray const &ray)
     // Find hit object and distance
     Hit min_hit(numeric_limits<double>::infinity(), Vector());
     ObjectPtr obj = nullptr;
+
+    // Parallelization with OpenMP.
+    #pragma omp parallel for
     for (unsigned idx = 0; idx != objects.size(); ++idx)
     {
         Hit hit(objects[idx]->intersect(ray));
@@ -33,38 +36,21 @@ Color Scene::trace(Ray const &ray)
     Vector N = min_hit.N;                          //the normal at hit point
     Vector V = -ray.D;                             //the view vector
 
-    /****************************************************
-    * This is where you should insert the color
-    * calculation (Phong model).
-    *
-    * Given: material, hit, N, V, lights[]
-    * Sought: color
-    *
-    * Hints: (see triple.h)
-    *        Triple.dot(Vector) dot product
-    *        Vector + Vector    vector sum
-    *        Vector - Vector    vector difference
-    *        Point - Point      yields vector
-    *        Vector.normalize() normalizes vector, returns length
-    *        double * Color     scales each color component (r,g,b)
-    *        Color * Color      dito
-    *        pow(a,b)           a to the power of b
-    ****************************************************/
     Color diffuse;
     Color ambient;
     Color specular;
 
     Color color = material.color;   
+    for(int i = 0; i < lights.size(); i++){
+        Vector L = lights[i]->position - hit;
+        Vector R = 2 * (L.dot(N)) * N - L;
+        L.normalize();
+        R.normalize();
 
-    Vector L = lights[0]->position - hit;
-    Vector R = 2 * (L.dot(N)) * N - L;
-    L.normalize();
-    R.normalize();
-
-    diffuse = fmax(0,N.dot(L)) * lights[0]->color * material.kd * color;
-    ambient = color * material.ka;
-    specular = pow(fmax(0, R.dot(V)), material.n) * lights[0]->color * material.ks;
-
+        diffuse += fmax(0,N.dot(L)) * lights[0]->color * material.kd * color;
+        ambient += color * material.ka;
+        specular += pow(fmax(0, R.dot(V)), material.n) * lights[0]->color * material.ks;
+    }
                    // place holder
 
     return diffuse + ambient + specular;

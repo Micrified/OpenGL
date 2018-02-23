@@ -28,55 +28,102 @@
 using namespace std;        // no std:: required
 using json = nlohmann::json;
 
+// =============================================================================
+// -- Helper Methods for loading objects ------------------------------
+// =============================================================================
+
+// Prepares a sphere object for the scene.
+void Raytracer::loadSphere (json const &node, vector<ObjectPtr> &sceneObjects) {
+    Point p(node["position"]);
+    double r = node["radius"];
+    sceneObjects.push_back(ObjectPtr(new Sphere(p, r)));
+}
+
+// Prepares a triangle object for the scene.
+void Raytracer::loadTriangle (json const &node, vector<ObjectPtr> &sceneObjects) {
+    Point a(node["point_a"]);
+    Point b(node["point_b"]);
+    Point c(node["point_c"]);
+    sceneObjects.push_back(ObjectPtr(new Triangle(a, b, c)));
+}
+
+// Prepares a plane object for the scene.
+void Raytracer::loadPlane (json const &node, vector<ObjectPtr> &sceneObjects) {
+    Point a(node["point_a"]);
+    Vector n(node["normal"]);
+    sceneObjects.push_back(ObjectPtr(new Plane(a, n)));
+}
+
+// Prepares a quad object for the scene.
+void Raytracer::loadQuad (json const &node, std::vector<ObjectPtr> &sceneObjects) {
+    cerr << "node" << "\n";
+    Point a(node["point_a"]);
+    Point b(node["point_b"]);
+    Point c(node["point_c"]);
+    Point d(node["point_d"]);
+    sceneObjects.push_back(ObjectPtr(new Quad(a, b, c, d)));
+}
+
+// Prepares a model object for the scene.
+void Raytracer::loadMesh (json const &node, vector<ObjectPtr> &sceneObjects) {
+    int s = 60, dx = 300, dy = 300, dz = 100;
+
+    // 1. Obtain file name. Load in object model.
+    string filePath = node["model"];
+    OBJLoader *model = new OBJLoader(filePath);
+
+    // 2. Extract vertex data and normal data.
+    vector<Vertex> vs = model->vertex_data();
+    for (unsigned i = 0; i < vs.size(); i += 3) {
+
+        // Extract three points as type Vertex.
+        Vertex a = vs[i], b = vs[i + 1], c = vs[i + 2];
+
+        // Convert to points with optional adjustments.
+        Point p = Triple(a.x * s + dx, a.y * s + dy, a.z * s + dz);
+        Point q = Triple(b.x * s + dx, b.y * s + dy, b.z * s + dz);
+        Point r = Triple(c.x * s + dx, c.y * s + dy, c.z * s + dz); 
+        
+        // Construct a triangle and push it to the scene object buffer.
+        ObjectPtr obj = ObjectPtr(new Triangle(p, q, r));
+        sceneObjects.push_back(obj);
+    }
+}
+
 bool Raytracer::parseObjectNode(json const &node)
 {
-    ObjectPtr obj = nullptr;
+    // Vector of objects to be added to the scene. 
+    std::vector<ObjectPtr> sceneObjects;
 
 // =============================================================================
 // -- Determine type and parse object parametrers ------------------------------
 // =============================================================================
 
-    if (node["type"] == "sphere")
-    {
-        Point pos(node["position"]);
-        double radius = node["radius"];
-        obj = ObjectPtr(new Sphere(pos, radius));
-    } else if (node["type"] == "triangle") 
-    {
-        Point a(node["point_a"]);
-        Point b(node["point_b"]);
-        Point c(node["point_c"]);
-        obj = ObjectPtr(new Triangle(a, b, c));
-    } else if (node["type"] == "plane")
-    {
-        Point a(node["point_a"]);
-        Vector n(node["normal"]);
-        obj = ObjectPtr(new Plane(a,n));
-    } else if (node["type"] == "quad")
-    {
-        Point a(node["point_a"]);
-        Point b(node["point_b"]);
-        Point c(node["point_c"]);
-        Point d(node["point_d"]);
-        obj = ObjectPtr(new Quad(a, b, c, d));
-    } else if (node["type"] == "model"){
-        string a(node["fileName"]);
-        obj = ObjectPtr(new model(a));
-    } else
-    {
-        cerr << "Unknown object type: " << node["type"] << ".\n";
+    // 1. Obtain the object-type string.
+    string objectTypeString = node["type"];
+
+    // 2. Load the specified objects.
+    switch (objectType(objectTypeString)) {
+        case OBJ_SPHERE: loadSphere(node, sceneObjects); break;
+        case OBJ_TRIANGLE: loadTriangle(node, sceneObjects); break;
+        case OBJ_PLANE: loadPlane(node, sceneObjects); break;
+        case OBJ_QUAD: loadQuad(node, sceneObjects); break;
+        case OBJ_MESH: loadMesh(node, sceneObjects); break;
+        default: cerr << "Unknown object type: \"" << objectTypeString << "\".\n";
     }
 
 // =============================================================================
 // -- End of object reading ----------------------------------------------------
 // =============================================================================
 
-    if (!obj)
-        return false;
+    // Parse material and add objects to the scene
+    Material material = parseMaterialNode(node["material"]);
+    for (unsigned i = 0; i < sceneObjects.size(); i++) {
+        ObjectPtr obj = sceneObjects[i];
+        obj->material = material;
+        scene.addObject(obj);
+    }
 
-    // Parse material and add object to the scene
-    obj->material = parseMaterialNode(node["material"]);
-    scene.addObject(obj);
     return true;
 }
 
@@ -95,6 +142,16 @@ Material Raytracer::parseMaterialNode(json const &node) const
     double ks = node["ks"];
     double n  = node["n"];
     return Material(color, ka, kd, ks, n);
+}
+
+// Custom Method which maps a object--type-string to an integer. 
+int Raytracer::objectType (std::string const &ofname) {
+    if (ofname.compare("sphere") == 0) return OBJ_SPHERE;
+    if (ofname.compare("triangle") == 0) return OBJ_TRIANGLE;
+    if (ofname.compare("plane") == 0) return OBJ_PLANE;
+    if (ofname.compare("quad") == 0) return OBJ_QUAD;
+    if (ofname.compare("mesh") == 0) return OBJ_MESH;
+    return OBJ_UNDEFINED;
 }
 
 bool Raytracer::readScene(string const &ifname)

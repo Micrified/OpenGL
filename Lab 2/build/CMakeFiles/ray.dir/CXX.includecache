@@ -401,6 +401,8 @@ shapes/quad.h
 /Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/shapes/quad.h
 shapes/plane.h
 /Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/shapes/plane.h
+objloader.h
+/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/objloader.h
 json/json.h
 /Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/json/json.h
 exception

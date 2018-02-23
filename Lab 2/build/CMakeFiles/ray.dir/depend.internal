@@ -33,6 +33,7 @@ CMakeFiles/ray.dir/Code/raytracer.cpp.o
  /Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/light.h
  /Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/material.h
  /Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/object.h
+ /Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/objloader.h
  /Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/ray.h
  /Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/raytracer.cpp
  /Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/raytracer.h
@@ -42,6 +43,7 @@ CMakeFiles/ray.dir/Code/raytracer.cpp.o
  /Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/shapes/sphere.h
  /Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/shapes/triangle.h
  /Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/triple.h
+ /Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/vertex.h
 CMakeFiles/ray.dir/Code/scene.cpp.o
  /Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/hit.h
  /Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/image.h
