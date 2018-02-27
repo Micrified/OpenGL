@@ -11,7 +11,6 @@
 
 #include "shapes/sphere.h"
 #include "shapes/triangle.h"
-#include "shapes/quad.h"
 #include "shapes/plane.h"
 #include "objloader.h"
 
@@ -61,7 +60,9 @@ void Raytracer::loadQuad (json const &node, std::vector<ObjectPtr> &sceneObjects
     Point b(node["point_b"]);
     Point c(node["point_c"]);
     Point d(node["point_d"]);
-    sceneObjects.push_back(ObjectPtr(new Quad(a, b, c, d)));
+
+    sceneObjects.push_back(ObjectPtr(new Triangle(a, b, c)));
+    sceneObjects.push_back(ObjectPtr(new Triangle(c, b, d)));
 }
 
 // Prepares a model object for the scene.

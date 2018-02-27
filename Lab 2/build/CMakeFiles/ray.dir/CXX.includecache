@@ -397,8 +397,6 @@ shapes/sphere.h
 /Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/shapes/sphere.h
 shapes/triangle.h
 /Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/shapes/triangle.h
-shapes/quad.h
-/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/shapes/quad.h
 shapes/plane.h
 /Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/shapes/plane.h
 objloader.h
@@ -465,24 +463,6 @@ cmath
 /Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/shapes/plane.h
 ../object.h
 /Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/object.h
-exception
--
-fstream
--
-iostream
--
-
-/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/shapes/quad.cpp
-quad.h
-/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/shapes/quad.h
-cmath
--
-
-/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/shapes/quad.h
-../object.h
-/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/object.h
-triangle.h
-/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/shapes/triangle.h
 exception
 -
 fstream

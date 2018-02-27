@@ -17,7 +17,7 @@ Color Scene::trace(Ray const &ray)
     ObjectPtr obj = nullptr;
 
     // Parallelization with OpenMP.
-    #pragma omp parallel for
+    //#pragma omp parallel for
     for (unsigned idx = 0; idx != objects.size(); ++idx)
     {
         Hit hit(objects[idx]->intersect(ray));

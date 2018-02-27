@@ -249,33 +249,9 @@ CMakeFiles/ray.dir/Code/shapes/plane.cpp.o.provides: CMakeFiles/ray.dir/Code/sha
 CMakeFiles/ray.dir/Code/shapes/plane.cpp.o.provides.build: CMakeFiles/ray.dir/Code/shapes/plane.cpp.o
 
 
-CMakeFiles/ray.dir/Code/shapes/quad.cpp.o: CMakeFiles/ray.dir/flags.make
-CMakeFiles/ray.dir/Code/shapes/quad.cpp.o: ../Code/shapes/quad.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/ray.dir/Code/shapes/quad.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ray.dir/Code/shapes/quad.cpp.o -c "/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/shapes/quad.cpp"
-
-CMakeFiles/ray.dir/Code/shapes/quad.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ray.dir/Code/shapes/quad.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/shapes/quad.cpp" > CMakeFiles/ray.dir/Code/shapes/quad.cpp.i
-
-CMakeFiles/ray.dir/Code/shapes/quad.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ray.dir/Code/shapes/quad.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/shapes/quad.cpp" -o CMakeFiles/ray.dir/Code/shapes/quad.cpp.s
-
-CMakeFiles/ray.dir/Code/shapes/quad.cpp.o.requires:
-
-.PHONY : CMakeFiles/ray.dir/Code/shapes/quad.cpp.o.requires
-
-CMakeFiles/ray.dir/Code/shapes/quad.cpp.o.provides: CMakeFiles/ray.dir/Code/shapes/quad.cpp.o.requires
-	$(MAKE) -f CMakeFiles/ray.dir/build.make CMakeFiles/ray.dir/Code/shapes/quad.cpp.o.provides.build
-.PHONY : CMakeFiles/ray.dir/Code/shapes/quad.cpp.o.provides
-
-CMakeFiles/ray.dir/Code/shapes/quad.cpp.o.provides.build: CMakeFiles/ray.dir/Code/shapes/quad.cpp.o
-
-
 CMakeFiles/ray.dir/Code/shapes/sphere.cpp.o: CMakeFiles/ray.dir/flags.make
 CMakeFiles/ray.dir/Code/shapes/sphere.cpp.o: ../Code/shapes/sphere.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/ray.dir/Code/shapes/sphere.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/ray.dir/Code/shapes/sphere.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ray.dir/Code/shapes/sphere.cpp.o -c "/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/shapes/sphere.cpp"
 
 CMakeFiles/ray.dir/Code/shapes/sphere.cpp.i: cmake_force
@@ -299,7 +275,7 @@ CMakeFiles/ray.dir/Code/shapes/sphere.cpp.o.provides.build: CMakeFiles/ray.dir/C
 
 CMakeFiles/ray.dir/Code/shapes/triangle.cpp.o: CMakeFiles/ray.dir/flags.make
 CMakeFiles/ray.dir/Code/shapes/triangle.cpp.o: ../Code/shapes/triangle.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/ray.dir/Code/shapes/triangle.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/ray.dir/Code/shapes/triangle.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ray.dir/Code/shapes/triangle.cpp.o -c "/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/shapes/triangle.cpp"
 
 CMakeFiles/ray.dir/Code/shapes/triangle.cpp.i: cmake_force
@@ -323,7 +299,7 @@ CMakeFiles/ray.dir/Code/shapes/triangle.cpp.o.provides.build: CMakeFiles/ray.dir
 
 CMakeFiles/ray.dir/Code/triple.cpp.o: CMakeFiles/ray.dir/flags.make
 CMakeFiles/ray.dir/Code/triple.cpp.o: ../Code/triple.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/ray.dir/Code/triple.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/ray.dir/Code/triple.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ray.dir/Code/triple.cpp.o -c "/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/Code/triple.cpp"
 
 CMakeFiles/ray.dir/Code/triple.cpp.i: cmake_force
@@ -355,7 +331,6 @@ ray_OBJECTS = \
 "CMakeFiles/ray.dir/Code/scene.cpp.o" \
 "CMakeFiles/ray.dir/Code/shapes/example.cpp.o" \
 "CMakeFiles/ray.dir/Code/shapes/plane.cpp.o" \
-"CMakeFiles/ray.dir/Code/shapes/quad.cpp.o" \
 "CMakeFiles/ray.dir/Code/shapes/sphere.cpp.o" \
 "CMakeFiles/ray.dir/Code/shapes/triangle.cpp.o" \
 "CMakeFiles/ray.dir/Code/triple.cpp.o"
@@ -371,13 +346,12 @@ ray: CMakeFiles/ray.dir/Code/raytracer.cpp.o
 ray: CMakeFiles/ray.dir/Code/scene.cpp.o
 ray: CMakeFiles/ray.dir/Code/shapes/example.cpp.o
 ray: CMakeFiles/ray.dir/Code/shapes/plane.cpp.o
-ray: CMakeFiles/ray.dir/Code/shapes/quad.cpp.o
 ray: CMakeFiles/ray.dir/Code/shapes/sphere.cpp.o
 ray: CMakeFiles/ray.dir/Code/shapes/triangle.cpp.o
 ray: CMakeFiles/ray.dir/Code/triple.cpp.o
 ray: CMakeFiles/ray.dir/build.make
 ray: CMakeFiles/ray.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX executable ray"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/Users/Owatch/Documents/Academics/Third Year/Block 3/Computer Graphics/Labs/Lab 2/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX executable ray"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ray.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -393,7 +367,6 @@ CMakeFiles/ray.dir/requires: CMakeFiles/ray.dir/Code/raytracer.cpp.o.requires
 CMakeFiles/ray.dir/requires: CMakeFiles/ray.dir/Code/scene.cpp.o.requires
 CMakeFiles/ray.dir/requires: CMakeFiles/ray.dir/Code/shapes/example.cpp.o.requires
 CMakeFiles/ray.dir/requires: CMakeFiles/ray.dir/Code/shapes/plane.cpp.o.requires
-CMakeFiles/ray.dir/requires: CMakeFiles/ray.dir/Code/shapes/quad.cpp.o.requires
 CMakeFiles/ray.dir/requires: CMakeFiles/ray.dir/Code/shapes/sphere.cpp.o.requires
 CMakeFiles/ray.dir/requires: CMakeFiles/ray.dir/Code/shapes/triangle.cpp.o.requires
 CMakeFiles/ray.dir/requires: CMakeFiles/ray.dir/Code/triple.cpp.o.requires
