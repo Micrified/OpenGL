@@ -17,9 +17,8 @@ Color Scene::trace(Ray const &ray)
     ObjectPtr obj = nullptr;
 
     // Parallelization with OpenMP.
-    #pragma omp parallel for
-    for (unsigned idx = 0; idx != objects.size(); ++idx)
-    {
+   // #pragma omp parallel for
+    for (int idx = 0; idx != objects.size(); ++idx) {
         Hit hit(objects[idx]->intersect(ray));
         if (hit.t < min_hit.t)
         {
@@ -41,7 +40,7 @@ Color Scene::trace(Ray const &ray)
     Color specular;
 
     Color color = material.color;   
-    for(int i = 0; i < lights.size(); i++){
+    for(unsigned i = 0; i < lights.size(); i++){
         Vector L = lights[i]->position - hit;
         Vector R = 2 * (L.dot(N)) * N - L;
         L.normalize();
