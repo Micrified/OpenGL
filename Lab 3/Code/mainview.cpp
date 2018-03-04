@@ -77,6 +77,34 @@ void MainView::initializeGL() {
     createShaderProgram();
 }
 
+/*
+********************************************************************************
+*                            Custom Utility Programs                           *
+********************************************************************************
+*/
+
+// Method for setting up a shader program.
+void MainView::setupShaderProgram (const QString &vertexShaderPath, const QString &fragmentShaderPath, QOpenGLShaderProgram *shaderProgramPointer, ShaderLocationSet *locationSetPointer) {
+
+    // Initialize the vertex and fragment shaders.
+    shaderProgramPointer->addShaderFromSourceFile(QOpenGLShader::Vertex, vertexShaderPath);
+    shaderProgramPointer->addShaderFromSourceCode(QOpenGLShader::Fragment, fragmentShaderPath);
+
+    // Compile and Activate the shader.
+    shaderProgramPointer->link();
+    shaderProgramPointer->bind();
+
+    // Initialize and assign all buffer-pointers to the location-set.
+    locationSetPointer->vertexTransformLocation = shaderProgramPointer->uniformLocation("vertexTransformUniform");
+    locationSetPointer->normalTransformLocation = shaderProgramPointer->uniformLocation("normalTransformUniform");
+    locationSetPointer->perspectiveLocation = shaderProgramPointer->uniformLocation("perspectiveUniform");
+
+    //locationSetPointer->lightingCoordinateLocation = p;
+    //locationSetPointer->materialLocation = q;
+    //locationSetPointer->samplerLocation = r;
+}
+
+// Method for setting up objects to be rendered.
 void MainView::setupVertexObject(GLuint *vbo, GLuint *vao, std::vector<vertex> dataVector) {
 
     // 1. Initialize VBO and VAO.
@@ -90,10 +118,12 @@ void MainView::setupVertexObject(GLuint *vbo, GLuint *vao, std::vector<vertex> d
     // 3. Enable both attributes of vertex coord(x,y,z) and color(r,g,b).
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
 
     // 4. Describe the data layout.
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), (GLvoid *)0);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), (GLvoid *)(3 * sizeof(GLfloat)));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(vertex), (GLvoid *)(6 * sizeof(GLfloat)));
 
     // 5. Upload the data: Use &<name>[0] for std::vector data.
     glBufferData(GL_ARRAY_BUFFER, (dataVector.size() * sizeof(vertex)), &dataVector[0], GL_STATIC_DRAW);
@@ -101,49 +131,60 @@ void MainView::setupVertexObject(GLuint *vbo, GLuint *vao, std::vector<vertex> d
 
 void MainView::createShaderProgram()
 {
-    // 1. Add vertex and fragment shaders.
-    shaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/shaders/vertshader.glsl");
-    shaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shaders/fragshader.glsl");
 
-    // 2. Compile the shader with link. Then activate the shader with bind.
-    shaderProgram.link();
-    shaderProgram.bind();
+    /*
+    ****************************************************************************
+    *                            Setup All Shaders                             *
+    ****************************************************************************
+    */
 
-    // 3. Initialize the uniformLocation to be able to do transformations.
-    uniformLocation = shaderProgram.uniformLocation("modelTransform");
+    // Setup the normal shader.
+    setupShaderProgram(":/shaders/vertshader.glsl", ":/shaders/fragshader.glsl",
+                       &normalShaderProgram, &normalShaderLocationSet);
 
-    rotationLocation = shaderProgram.uniformLocation("rotation");
-    scaleLocation = shaderProgram.uniformLocation("scale");
 
-    // 4. Initialize the perspective to be able to adjust perspective.
-    perspectiveLocation = shaderProgram.uniformLocation("perspective");
+    /*
+    ****************************************************************************
+    *                  Setup Initial Model/Perspective Transforms              *
+    ****************************************************************************
+    */
 
-    // 5. Initialise the normal transform uniform.
-    normalLocation = shaderProgram.uniformLocation("normalMatrix");
+    // DEFAULT: Model translation.
+    translationMatrix.translate({0, 0, -3});
 
-    // 6. Setup our transforms & perspective.
-    meshTranslationMatrix.translate({0,0,-3});
-
-    // 7. Setup our perspective.
+    // DEFAULT: Perspective.
     perspectiveMatrix.perspective(60.0, width()/height(), 0.1, 10.0);
 
-    // *************************************************************************
+    /*
+    ****************************************************************************
+    *                              Load-In Model(s)                            *
+    ****************************************************************************
+    */
 
-    // Load in the mesh.
-    Model meshModel = Model(":models/cat.obj");
-    meshModel.unitize();
+    // Load in model.
+    Model model = Model(":models/cat.obj");
 
-    // Create the sphere.
-    std::vector<vertex> mesh = vectorFrom3D(meshModel.getVertices(), meshModel.getNormals());
+    // Unitize model.
+    model.unitize();
 
-    // Set the vertex count.
+    // Translate model mesh to vector.
+    std::vector<vertex> mesh = vectorFrom3D(model.getVertices(), model.getNormals(),
+                                            model.getTextureCoords());
+
+    // Set the model vertex count.
     meshVertexCount = mesh.size();
 
-    // Setup the sphere.
-    this->setupVertexObject(&mesh_vbo, &mesh_vao, mesh);
+    // Prepare model to be shown in scene.
+    setupVertexObject(&mesh_vbo, &mesh_vao, mesh);
 
+    /*
+    ****************************************************************************
+    *                       Setup Initial Shader Program                       *
+    ****************************************************************************
+    */
 
-    // *************************************************************************
+    activeShaderProgramPointer = &normalShaderProgram;
+    activeLocationSetPointer = &normalShaderLocationSet;
 }
 
 // --- OpenGL drawing
@@ -159,30 +200,35 @@ void MainView::paintGL() {
     // Clear the screen before rendering
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    shaderProgram.bind();
+    // BIND: Active Shader Program.
+    activeShaderProgramPointer->bind();
 
-    // Setup perspective.
+    // Obain Active Locations.
+    GLuint vertexTransformLocation  = activeLocationSetPointer->vertexTransformLocation;
+    GLuint normalTransformLocation  = activeLocationSetPointer->normalTransformLocation;
+    GLuint perspectiveLocation      = activeLocationSetPointer->perspectiveLocation;
+
+    // COMPUTE: Transform (translation • scale • rotation).
+    QMatrix4x4 transformMatrix = translationMatrix * scaleMatrix * rotationMatrix;
+
+    // COMPUTE: Normal-Transform. (CHECK THIS IS CORRECT?)
+    QMatrix3x3 normalTransformMatrix = transformMatrix.normalMatrix();
+
+    // SET: Transform.
+    glUniformMatrix4fv(vertexTransformLocation, 1, GL_FALSE, transformMatrix.data());
+
+    // SET: Perspective.
     glUniformMatrix4fv(perspectiveLocation, 1, GL_FALSE, perspectiveMatrix.data());
 
-    // Setup model transform.
-    meshTransform = (meshTranslationMatrix * scaleMatrix * rotationMatrix);
+    // SET: Normal-Transform.
+    glUniformMatrix3fv(normalTransformLocation, 1, GL_FALSE, normalTransformMatrix.data());
 
-    // Setup mesh transformation.
-    glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, meshTransform.data());
-
-    // Setup normal transformation.
-    normalTransform = (meshTranslationMatrix * scaleMatrix * rotationMatrix).normalMatrix();
-
-   // Apply normal transformation.
-    glUniformMatrix3fv(normalLocation, 1, GL_FALSE, normalTransform.data());
-
-    /******************************************************/
-
-    // Draw mesh.
+    // DRAW: Model Mesh.
     glBindVertexArray(this->mesh_vao);
     glDrawArrays(GL_TRIANGLES, 0, meshVertexCount);
 
-    shaderProgram.release();
+    // RELEASE: Active Shader Program.
+    activeShaderProgramPointer->release();
 }
 
 /**

@@ -17,14 +17,84 @@
 #include "vertex.h"
 #include "geometry.h"
 
+/*
+********************************************************************************
+*                                 Data Types                                   *
+********************************************************************************
+*/
+
+/* Contains all pointers to a shader program's vertex buffers. */
+typedef struct {
+
+    /* CATEGORY: Transforms. */
+    GLuint vertexTransformLocation;     // Pointer to vertex transform buffer.
+    GLuint normalTransformLocation;     // Pointer to normal transform buffer.
+    GLuint perspectiveLocation;         // Pointer to perspective transform buffer.
+
+    /* CATEGORY: Lighting & Material. */
+    GLuint lightingCoordinateLocation;  // Pointer to light-source coordinate buffer.
+    GLuint materialLocation;            // Pointer to material data buffer.
+
+    /* CATEGORY: Textures. */
+    GLuint samplerLocation;             // Pointer to texture data buffer.
+
+} ShaderLocationSet;
+
+
+/*
+********************************************************************************
+*                              Class Declaration                               *
+********************************************************************************
+*/
+
+
 class MainView : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
     Q_OBJECT
 
     QOpenGLDebugLogger *debugLogger;
     QTimer timer; // timer used for animation
 
-    // The shader program.
-    QOpenGLShaderProgram shaderProgram;
+    /*
+    ****************************************************************************
+    *                                Shaders                                   *
+    ****************************************************************************
+    */
+
+    // The Normal shader program.
+    QOpenGLShaderProgram normalShaderProgram;
+
+    // The Phong shader program.
+    QOpenGLShaderProgram phongShaderProgram;
+
+    // The Gouraud shader program.
+    QOpenGLShaderProgram gouraudShaderProgram;
+
+    /*
+    ****************************************************************************
+    *                          Shader Buffer Pointers                          *
+    ****************************************************************************
+    */
+
+    // The set of buffer-pointers for the normal shader program.
+    ShaderLocationSet normalShaderLocationSet;
+
+    // The set of buffer-pointers for the phong shader program.
+    ShaderLocationSet phongShaderLocationSet;
+
+    // The set of buffer-pointers for the gouraud shader program.
+    ShaderLocationSet gouraudShaderLocationSet;
+
+    /*
+    ****************************************************************************
+    *                         Active Shader Information                        *
+    ****************************************************************************
+    */
+
+    // A pointer to the currently active shader program.
+    QOpenGLShaderProgram *activeShaderProgramPointer;
+
+    // A pointer to the currently active shader location set.
+    ShaderLocationSet *activeLocationSetPointer;
 
 public:
     enum ShadingMode : GLuint
@@ -40,7 +110,16 @@ public:
     void setScale(int scale);
     void setShadingMode(ShadingMode shading);
 
-    // Functions for setting up objects to be rendered.
+    /*
+    ****************************************************************************
+    *                          Custom Utility Methods                          *
+    ****************************************************************************
+    */
+
+    // Method for setting up a shader program.
+    void setupShaderProgram (const QString &, const QString &, QOpenGLShaderProgram *, ShaderLocationSet *);
+
+    // Method for setting up objects to be rendered.
     void setupVertexObject(GLuint *vbo, GLuint *vao, std::vector<vertex> dataVector);
 
 protected:
@@ -65,7 +144,11 @@ private slots:
 private:
     void createShaderProgram();
 
-    // *******************************************
+    /*
+    ********************************************************************************
+    *                              Scene Object Data                               *
+    ********************************************************************************
+    */
 
     // Mesh vertex count.
     GLuint meshVertexCount;
@@ -73,37 +156,25 @@ private:
     // Mesh VBO and VAO.
     GLuint mesh_vbo, mesh_vao;
 
-    // Mesh Translation Matrix.
-    QMatrix4x4 meshTranslationMatrix;
 
-    // *******************************************
+    /*
+    ********************************************************************************
+    *                            Scene Object Transform                            *
+    ********************************************************************************
+    */
 
-    // Matrix for mesh transform.
-    QMatrix4x4 meshTransform;
+    // Matrix representing the current translation.
+    QMatrix4x4 translationMatrix;
 
-    // Matrix for rotation.
+    // Matrix representing the current rotation.
     QMatrix4x4 rotationMatrix;
 
-    // Matrix for scaling
+    // Matrix representing the current scale.
     QMatrix4x4 scaleMatrix;
 
-    // Matrix for perspective.
+    // Matrix representing the current perspective.
     QMatrix4x4 perspectiveMatrix;
 
-    // Matrix for normal-transform.
-    QMatrix3x3 normalTransform;
-
-    // Perspective Location (for sending perspective to shader).
-    GLuint perspectiveLocation;
-
-    // Uniform Location (for sending transforms to shader).
-    GLuint uniformLocation;
-
-    // Uniform Rotation and Scale Locations (for sending transforms to shader).
-    GLuint rotationLocation, scaleLocation;
-
-    // Uniform for normal transforms/
-    GLuint normalLocation;
 };
 
 #endif // MAINVIEW_H

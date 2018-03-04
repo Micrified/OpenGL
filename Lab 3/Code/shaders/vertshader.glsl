@@ -3,25 +3,57 @@
 // Define constants
 #define M_PI 3.141593
 
-// Specify the input locations of attributes
-layout (location = 0) in vec3 vertCoordinates_in;
-layout (location = 1) in vec3 vertNormal_in;
+/*
+********************************************************************************
+*                                  Attributes                                  *
+********************************************************************************
+*/
 
-// Specify the Uniforms of the vertex shader
-uniform mat4 modelTransform;
+// Vertex Coordinates.
+layout (location = 0) in vec3 vertexCoordinate;
 
-// Specify the Perspectives of the vertex shader
-uniform mat4 perspective;
+// Normal Vector or color. Depends which it is being used for.
+layout (location = 1) in vec3 normalVector;
 
-// Specify uniform normal transform matrix.
-uniform mat3 normalMatrix;
+// Texture Coordiantes.
+layout (location = 2) in vec2 textureCoordinate;
 
-// Specify the output of the vertex stage
-out vec3 vertNormal;
+/*
+********************************************************************************
+*                                   Uniforms                                   *
+********************************************************************************
+*/
 
-void main()
-{
-    // gl_Position is the output (a vec4) of the vertex shader
-    gl_Position = perspective * modelTransform * vec4(vertCoordinates_in, 1.0);
-    vertNormal = normalMatrix * vertNormal_in;
+// Vertex Transformation Uniform: Translation + Rotation + Scaling.
+uniform mat4 vertexTransformUniform;
+
+// Normal Transform Uniform: Transformation of normal vector.
+uniform mat3 normalTransformUniform;
+
+// Perspective Uniform: Viewing Perspective.
+uniform mat4 perspectiveUniform;
+
+/*
+********************************************************************************
+*                              Exported Variables                              *
+********************************************************************************
+*/
+
+// Export: Color to be rendered in fragment shader.
+out vec3 vertexColor;
+
+/*
+********************************************************************************
+*                                    Main                                      *
+********************************************************************************
+*/
+
+void main () {
+
+    // Compute vertex position.
+    gl_Position = perspectiveUniform * vertexTransformUniform * vec4(vertexCoordinate, 1.0);
+
+    // Compute the transformed normal vector as the color.
+    vertexColor = normalTransformUniform * normalVector;
+
 }
