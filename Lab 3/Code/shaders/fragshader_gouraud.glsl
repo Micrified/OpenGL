@@ -9,6 +9,8 @@
 ********************************************************************************
 */
 
+// Sampler Uniform:
+uniform sampler2D samplerUniform;
 
 /*
 ********************************************************************************
@@ -16,8 +18,11 @@
 ********************************************************************************
 */
 
-// Import: The vertex color to be rendered.
-in vec3 vertexColor;
+// Import: The illumination constant.
+in float i;
+
+// Import: The texture coordinate.
+in vec2 fragmentTextureCoordinate;
 
 /*
 ********************************************************************************
@@ -34,9 +39,13 @@ out vec4 fColor;
 ********************************************************************************
 */
 
-void main () {
+void main ()
+{
+
+    // Get texture color.
+    vec4 textureColor = texture2D(samplerUniform, fragmentTextureCoordinate);
 
     // Compute the color as a function of the transformed normal vector.
-    fColor = vec4(normalize(vertexColor) * 0.5 + 0.5, 1.0);
+    fColor = textureColor * i;
 
 }

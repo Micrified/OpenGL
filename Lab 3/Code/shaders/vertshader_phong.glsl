@@ -33,14 +33,32 @@ uniform mat3 normalTransformUniform;
 // Perspective Uniform: Viewing Perspective.
 uniform mat4 perspectiveUniform;
 
+// Lighting Uniform: Light Source Coordinate.
+uniform vec3 lightCoordinateUniform;
+
+// Material Uniform: Material Properties.
+uniform vec4 materialUniform;
+
 /*
 ********************************************************************************
 *                              Exported Variables                              *
 ********************************************************************************
 */
 
-// Export: Color to be rendered in fragment shader.
-out vec3 vertexColor;
+// Export: The adjusted vertex.
+out vec3 adjustedVertex;
+
+// Export: The adjusted light location.
+out vec3 adjustedLightCoordinate;
+
+// Export: The adjusted normal vector.
+out vec3 adjustedNormalVector;
+
+// Export: The material.
+out vec4 material;
+
+// Export: The texture coordinate.
+out vec2 fragmentTextureCoordinate;
 
 /*
 ********************************************************************************
@@ -50,10 +68,19 @@ out vec3 vertexColor;
 
 void main () {
 
-    // Compute vertex position.
+    // Compute the adjusted vertex.
     gl_Position = perspectiveUniform * vertexTransformUniform * vec4(vertexCoordinate, 1.0);
+    adjustedVertex = vec4(vertexTransformUniform * vec4(vertexCoordinate, 1.0)).xyz;
 
-    // Compute the transformed normal vector as the color.
-    vertexColor = normalTransformUniform * normalVector;
+    // Compute adjusted light location.
+    adjustedLightCoordinate = vec4(vertexTransformUniform * vec4(lightCoordinateUniform, 1.0)).xyz;
 
+    // Compute adjusted normal vector.
+    adjustedNormalVector = normalize(normalTransformUniform * normalVector);
+
+    // Copy over material.
+    material = materialUniform;
+
+    // Copy over texture coordinate.
+    fragmentTextureCoordinate = textureCoordinate;
 }

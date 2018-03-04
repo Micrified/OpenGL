@@ -32,7 +32,7 @@ typedef struct {
     GLuint perspectiveLocation;         // Pointer to perspective transform buffer.
 
     /* CATEGORY: Lighting & Material. */
-    GLuint lightingCoordinateLocation;  // Pointer to light-source coordinate buffer.
+    GLuint lightCoordinateLocation;  // Pointer to light-source coordinate buffer.
     GLuint materialLocation;            // Pointer to material data buffer.
 
     /* CATEGORY: Textures. */
@@ -116,6 +116,12 @@ public:
     ****************************************************************************
     */
 
+    // Method for converting an texture image to bytes.
+    QVector<quint8> imageToBytes(QImage image);
+
+    // Method for loading in a texture. Uses global texturePointer to store texture.
+    void loadTexture (QString file);
+
     // Method for setting up a shader program.
     void setupShaderProgram (const QString &, const QString &, QOpenGLShaderProgram *, ShaderLocationSet *);
 
@@ -156,6 +162,14 @@ private:
     // Mesh VBO and VAO.
     GLuint mesh_vbo, mesh_vao;
 
+    // Mesh Material: (ka, kd, ks, n).
+    std::vector<float> materialVector;
+
+    // Lighting coordinate.
+    std::vector<float> lightCoordinateVector;
+
+    // Texture pointer.
+    GLuint texturePointer;
 
     /*
     ********************************************************************************
