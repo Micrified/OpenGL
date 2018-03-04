@@ -251,7 +251,7 @@ void MainView::createShaderProgram()
     lightCoordinateVector = std::vector<float>{2.0, 2.0, 2.0};
 
     // Set the material of the cute cat.
-    materialVector = std::vector<float>{0.2, 0.7, 0.2, 64.0};
+    materialVector = std::vector<float>{0.2, 0.7, 0.9, 64.0};
 
     /*
     ****************************************************************************
