@@ -1,0 +1,3 @@
+/home/s2990652/Desktop/CG/OpenGL/Lab 4/build/CMakeFiles/edit_cache.dir
+/home/s2990652/Desktop/CG/OpenGL/Lab 4/build/CMakeFiles/rebuild_cache.dir
+/home/s2990652/Desktop/CG/OpenGL/Lab 4/build/CMakeFiles/ray.dir

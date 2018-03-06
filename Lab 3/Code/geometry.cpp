@@ -16,7 +16,7 @@ float abs (float a) {
 std::vector<vertex> vectorFrom3D(QVector<QVector3D> vertices, QVector<QVector3D> normals, QVector<QVector2D> textCoords) {
     std::vector<vertex> q;
     QVector3D *vertexData = vertices.data(), *normalData = normals.data();
-    //QVector2D *textData =  textCoords.data();
+    QVector2D *textData = textCoords.data();
     q.reserve(vertices.size());
 
     for (int i = 0; i < vertices.size(); i++) {
@@ -28,7 +28,8 @@ std::vector<vertex> vectorFrom3D(QVector<QVector3D> vertices, QVector<QVector3D>
         float nx = normalData[i].x(), ny = normalData[i].y(), nz = normalData[i].z();
 
         // Set texture coordinate.
-        float tx = 0, ty = 1;
+        float tx = textData[i].x();
+        float ty = textData[i].y();
 
         q.push_back(newVertex(x, y, z, nx, ny, nz, tx, ty));
     }
