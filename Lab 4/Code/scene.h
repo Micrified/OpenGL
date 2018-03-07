@@ -7,6 +7,8 @@
 
 #include <vector>
 
+#define NONE    -1
+
 // Forward declerations
 class Ray;
 class Image;
@@ -19,10 +21,10 @@ class Scene
 
     public:
         // finds the first intersect of a ray and an object
-        Hit firstIntersect(Ray const &ray, ObjectPtr *obj);
+        Hit firstIntersect(Ray const &ray, int *objectIndexPtr, int ignoringObjectAtIndex);
 
         // trace a ray into the scene and return the color
-        Color trace(Ray const &ray);
+        Color trace(Ray const &ray, int depth = 2, int ignore = NONE);
 
         // render the scene to the given image
         void render(Image &img);
