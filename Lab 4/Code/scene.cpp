@@ -19,7 +19,7 @@ Hit Scene::firstIntersect(Ray const &ray, int *objectIndexPtr, int ignoringObjec
     int objectIndex = NONE;
 
     // Determine the closest object hit in the scene.
-    for (unsigned idx = 0; idx != objects.size(); ++idx)
+    for (int idx = 0; idx != (int)objects.size(); ++idx)
     {   
         if (idx == ignoringObjectAtIndex) {
             continue;
@@ -48,7 +48,6 @@ Color Scene::trace(Ray const &ray, int depth, int ignore)
     if (objectIndex == NONE || depth == 0) return Color(0.0, 0.0, 0.0);
 
     ObjectPtr obj = objects[objectIndex];
-    int currentObjectIndex = objectIndex;
     Material material = obj->material;          //the hit objects material
     Point hit = ray.at(min_hit.t);                 //the hit point
     Vector N = min_hit.N;                          //the normal at hit point
@@ -57,15 +56,23 @@ Color Scene::trace(Ray const &ray, int depth, int ignore)
     Color diffuse;
     Color specular;
 
+    /*********************** Get Color **************************/
+    Color color;
+    if (material.isTextured) {
+        color = obj->getTextureColorAtPoint(hit);
+    } else {
+        color = material.color;  
+    }
 
-    Color color = material.color;   
-    for(int i = 0; i < lights.size(); i++){
+    /*********************** Compute illumination **************************/
+
+    for(unsigned i = 0; i < lights.size(); i++){
         Vector L = lights[i]->position - hit;
 
         Ray lightRay(hit, L);
         Hit lightIntersect = firstIntersect(lightRay, NULL, objectIndex);
 
-        if(lightIntersect.t < L.length()) continue;
+        if(hasShadows && lightIntersect.t < L.length()) continue;
         
         Vector R = 2 * (L.dot(N)) * N - L;
         L.normalize();
@@ -88,20 +95,22 @@ Color Scene::trace(Ray const &ray, int depth, int ignore)
 
 void Scene::render(Image &img)
 {
-    unsigned a = 4;
+    unsigned a = superSamplingFactor;
     unsigned w = img.width();
     unsigned h = img.height();
     for (unsigned y = 0; y < h; ++y)
     {
         for (unsigned x = 0; x < w; ++x)
         {   
+
+            /* Anti-Aliasing */
             Color col;
             double offset = 1.0 / (double)(a + a); 
             for (unsigned i = 1; i <= a; ++i) {
                 for (unsigned j = 1; j <= a; j++) {
                     Point pixel(x + i * offset, h - 1 - y + j * offset, 0);
                     Ray ray(eye, (pixel - eye).normalized());
-                    col += trace(ray);
+                    col += trace(ray, maxRecursion);
                 }
             }
             col /= a * a;
@@ -126,6 +135,18 @@ void Scene::addLight(Light const &light)
 void Scene::setEye(Triple const &position)
 {
     eye = position;
+}
+
+void Scene::setHasShadows (bool hasShadows) {
+    this->hasShadows = hasShadows;
+}
+
+void Scene::setSuperSamplingFactor (int superSamplingFactor) {
+    this->superSamplingFactor = superSamplingFactor;
+}
+
+void Scene::setMaxRecursion (int maxRecursion) {
+    this->maxRecursion = maxRecursion;
 }
 
 unsigned Scene::getNumObject()

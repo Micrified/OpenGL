@@ -6,31 +6,31 @@
 
 #IncludeRegexTransform: 
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/hit.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/hit.h
 triple.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/triple.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/triple.h
 limits
 -
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/image.cpp
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/image.cpp
 image.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/image.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/image.h
 lode/lodepng.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/lode/lodepng.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/lode/lodepng.h
 iostream
 -
 fstream
 -
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/image.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/image.h
 triple.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/triple.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/triple.h
 string
 -
 vector
 -
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/json/json.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/json/json.h
 algorithm
 -
 cassert
@@ -294,7 +294,7 @@ utility
 utility
 -
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/json/json_fwd.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/json/json_fwd.h
 cstdint
 -
 map
@@ -306,15 +306,15 @@ string
 vector
 -
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/light.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/light.h
 triple.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/triple.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/triple.h
 memory
 -
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/lode/lodepng.cpp
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/lode/lodepng.cpp
 lodepng.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/lode/lodepng.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/lode/lodepng.h
 limits.h
 -
 stdio.h
@@ -322,7 +322,7 @@ stdio.h
 stdlib.h
 -
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/lode/lodepng.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/lode/lodepng.h
 string.h
 -
 vector
@@ -330,39 +330,45 @@ vector
 string
 -
 lodepng.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/lode/lodepng.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/lode/lodepng.h
 iostream
 -
 lodepng.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/lode/lodepng.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/lode/lodepng.h
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/main.cpp
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/main.cpp
 raytracer.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/raytracer.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/raytracer.h
 iostream
 -
 string
 -
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/material.h
-triple.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/triple.h
-
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/object.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/material.cpp
 material.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/material.h
-hit.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/hit.h
-ray.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/ray.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/material.h
+
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/material.h
 triple.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/triple.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/triple.h
+image.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/image.h
+
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/object.h
+material.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/material.h
+hit.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/hit.h
+ray.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/ray.h
+triple.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/triple.h
 memory
 -
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/objloader.cpp
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/objloader.cpp
 objloader.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/objloader.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/objloader.h
 fstream
 -
 iostream
@@ -370,37 +376,37 @@ iostream
 sstream
 -
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/objloader.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/objloader.h
 vertex.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/vertex.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/vertex.h
 string
 -
 vector
 -
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/ray.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/ray.h
 triple.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/triple.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/triple.h
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/raytracer.cpp
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/raytracer.cpp
 raytracer.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/raytracer.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/raytracer.h
 image.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/image.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/image.h
 light.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/light.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/light.h
 material.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/material.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/material.h
 triple.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/triple.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/triple.h
 shapes/sphere.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/shapes/sphere.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/shapes/sphere.h
 shapes/triangle.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/shapes/triangle.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/shapes/triangle.h
 objloader.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/objloader.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/objloader.h
 json/json.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/json/json.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/json/json.h
 exception
 -
 fstream
@@ -408,89 +414,89 @@ fstream
 iostream
 -
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/raytracer.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/raytracer.h
 scene.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/scene.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/scene.h
 string
 -
 json/json_fwd.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/json/json_fwd.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/json/json_fwd.h
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/scene.cpp
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/scene.cpp
 scene.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/scene.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/scene.h
 hit.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/hit.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/hit.h
 image.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/image.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/image.h
 material.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/material.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/material.h
 ray.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/ray.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/ray.h
 cmath
 -
 limits
 -
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/scene.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/scene.h
 light.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/light.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/light.h
 object.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/object.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/object.h
 triple.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/triple.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/triple.h
 vector
 -
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/shapes/example.cpp
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/shapes/example.cpp
 example.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/shapes/example.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/shapes/example.h
 cmath
 -
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/shapes/example.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/shapes/example.h
 ../object.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/object.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/object.h
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/shapes/solvers.cpp
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/shapes/solvers.cpp
 solvers.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/shapes/solvers.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/shapes/solvers.h
 cmath
 -
 utility
 -
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/shapes/solvers.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/shapes/solvers.h
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/shapes/sphere.cpp
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/shapes/sphere.cpp
 sphere.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/shapes/sphere.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/shapes/sphere.h
 solvers.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/shapes/solvers.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/shapes/solvers.h
 cmath
 -
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/shapes/sphere.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/shapes/sphere.h
 ../object.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/object.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/object.h
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/shapes/triangle.cpp
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/shapes/triangle.cpp
 triangle.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/shapes/triangle.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/shapes/triangle.h
 cfloat
 -
 cmath
 -
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/shapes/triangle.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/shapes/triangle.h
 ../object.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/object.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/object.h
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/triple.cpp
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/triple.cpp
 triple.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/triple.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/triple.h
 json/json.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/json/json.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/json/json.h
 cmath
 -
 exception
@@ -498,11 +504,11 @@ exception
 iostream
 -
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/triple.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/triple.h
 json/json_fwd.h
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/json/json_fwd.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/json/json_fwd.h
 iosfwd
 -
 
-/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/vertex.h
+/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/vertex.h
 

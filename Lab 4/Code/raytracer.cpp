@@ -34,7 +34,10 @@ using json = nlohmann::json;
 void Raytracer::loadSphere (json const &node, vector<ObjectPtr> &sceneObjects) {
     Point p(node["position"]);
     double r = node["radius"];
-    sceneObjects.push_back(ObjectPtr(new Sphere(p, r)));
+    json j; j["list"] = {0.0, 0.0, 1.0};
+    Vector rotation = Vector(node.value("rotation", j["list"]));
+    double angle = node.value("angle", 0.0);
+    sceneObjects.push_back(ObjectPtr(new Sphere(p, r, rotation, angle)));
 }
 
 // Prepares a triangle object for the scene.
@@ -133,7 +136,13 @@ Material Raytracer::parseMaterialNode(json const &node) const
     double kd = node["kd"];
     double ks = node["ks"];
     double n  = node["n"];
-    return Material(color, ka, kd, ks, n);
+    
+    if (node.value("texture", "") == "") {
+        return Material(color, ka, kd, ks, n);
+    } else {
+       std::string texture = node["texture"];
+       return Material(texture, ka, kd, ks, n);
+    }  
 }
 
 // Custom Method which maps a object--type-string to an integer. 
@@ -161,6 +170,17 @@ try
     Point eye(jsonscene["Eye"]);
     scene.setEye(eye);
 
+    // Loading shadows.
+    bool shadows = jsonscene.value("Shadows", false);
+    scene.setHasShadows(shadows);
+
+    // Loading supersampling/anti-aliasing.
+    int superSamplingFactor = jsonscene.value("SuperSamplingFactor", 1);
+    scene.setSuperSamplingFactor(superSamplingFactor);
+
+    // Loading max recursion.
+    int maxRecursion = jsonscene.value("MaxRecursionDepth", 1);
+    scene.setMaxRecursion(maxRecursion);
     // TODO: add your other configuration settings here
 
     for (auto const &lightNode : jsonscene["Lights"])

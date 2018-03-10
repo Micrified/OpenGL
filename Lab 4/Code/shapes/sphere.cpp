@@ -5,6 +5,14 @@
 
 using namespace std;
 
+Sphere::Sphere (Point const &pos, double radius, Vector rotation, double angle)
+:
+    position(pos),
+    r(radius),
+    rotation(rotation),
+    angle(angle)
+{}
+
 Hit Sphere::intersect(Ray const &ray)
 {
     // Sphere formula: ||x - position||^2 = r^2
@@ -39,8 +47,19 @@ Hit Sphere::intersect(Ray const &ray)
     return Hit(t0, N);
 }
 
-Sphere::Sphere(Point const &pos, double radius)
-:
-    position(pos),
-    r(radius)
-{}
+Color Sphere::getTextureColorAtPoint (Point p){
+    double x = p.x, y = p.y, z = p.z;
+    double cx = position.x, cy = position.y, cz = position.z;
+
+    double theta = acos((cz - z) / r);
+    double phi = atan2(y - cy, x - cx) - this->angle;
+
+    if(phi < 0) {
+        phi += 2 * M_PI;
+    }
+
+    double u = phi / (2 * M_PI);
+    double v = (M_PI - theta) / M_PI;
+
+    return material.texture->colorAt(u, v);
+}

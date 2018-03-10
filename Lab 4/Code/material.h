@@ -2,6 +2,8 @@
 #define MATERIAL_H_
 
 #include "triple.h"
+#include "image.h"
+
 
 class Material
 {
@@ -11,17 +13,14 @@ class Material
         double kd;          // diffuse intensity
         double ks;          // specular intensity
         double n;           // exponent for specular highlight size
+        Image *texture;      // Pointer to the image texture for the material.
+        bool isTextured;    // Boolean conditional: Whether or not object is textured.
 
         Material() = default;
 
-        Material(Color const &color, double ka, double kd, double ks, double n)
-        :
-            color(color),
-            ka(ka),
-            kd(kd),
-            ks(ks),
-            n(n)
-        {}
+        Material(Color const &color, double ka, double kd, double ks, double n);
+
+        Material(std::string const &textureName, double ka, double kd, double ks, double n);
 };
 
 #endif

@@ -1,4 +1,4 @@
-# Install script for directory: /home/s2990652/Desktop/CG/OpenGL/Lab 4
+# Install script for directory: /home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/s2990652/Desktop/CG/OpenGL/Lab 4/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

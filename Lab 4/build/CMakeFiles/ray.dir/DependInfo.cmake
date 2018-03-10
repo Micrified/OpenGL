@@ -4,17 +4,18 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/image.cpp" "/home/s2990652/Desktop/CG/OpenGL/Lab 4/build/CMakeFiles/ray.dir/Code/image.cpp.o"
-  "/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/lode/lodepng.cpp" "/home/s2990652/Desktop/CG/OpenGL/Lab 4/build/CMakeFiles/ray.dir/Code/lode/lodepng.cpp.o"
-  "/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/main.cpp" "/home/s2990652/Desktop/CG/OpenGL/Lab 4/build/CMakeFiles/ray.dir/Code/main.cpp.o"
-  "/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/objloader.cpp" "/home/s2990652/Desktop/CG/OpenGL/Lab 4/build/CMakeFiles/ray.dir/Code/objloader.cpp.o"
-  "/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/raytracer.cpp" "/home/s2990652/Desktop/CG/OpenGL/Lab 4/build/CMakeFiles/ray.dir/Code/raytracer.cpp.o"
-  "/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/scene.cpp" "/home/s2990652/Desktop/CG/OpenGL/Lab 4/build/CMakeFiles/ray.dir/Code/scene.cpp.o"
-  "/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/shapes/example.cpp" "/home/s2990652/Desktop/CG/OpenGL/Lab 4/build/CMakeFiles/ray.dir/Code/shapes/example.cpp.o"
-  "/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/shapes/solvers.cpp" "/home/s2990652/Desktop/CG/OpenGL/Lab 4/build/CMakeFiles/ray.dir/Code/shapes/solvers.cpp.o"
-  "/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/shapes/sphere.cpp" "/home/s2990652/Desktop/CG/OpenGL/Lab 4/build/CMakeFiles/ray.dir/Code/shapes/sphere.cpp.o"
-  "/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/shapes/triangle.cpp" "/home/s2990652/Desktop/CG/OpenGL/Lab 4/build/CMakeFiles/ray.dir/Code/shapes/triangle.cpp.o"
-  "/home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/triple.cpp" "/home/s2990652/Desktop/CG/OpenGL/Lab 4/build/CMakeFiles/ray.dir/Code/triple.cpp.o"
+  "/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/image.cpp" "/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/build/CMakeFiles/ray.dir/Code/image.cpp.o"
+  "/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/lode/lodepng.cpp" "/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/build/CMakeFiles/ray.dir/Code/lode/lodepng.cpp.o"
+  "/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/main.cpp" "/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/build/CMakeFiles/ray.dir/Code/main.cpp.o"
+  "/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/material.cpp" "/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/build/CMakeFiles/ray.dir/Code/material.cpp.o"
+  "/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/objloader.cpp" "/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/build/CMakeFiles/ray.dir/Code/objloader.cpp.o"
+  "/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/raytracer.cpp" "/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/build/CMakeFiles/ray.dir/Code/raytracer.cpp.o"
+  "/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/scene.cpp" "/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/build/CMakeFiles/ray.dir/Code/scene.cpp.o"
+  "/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/shapes/example.cpp" "/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/build/CMakeFiles/ray.dir/Code/shapes/example.cpp.o"
+  "/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/shapes/solvers.cpp" "/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/build/CMakeFiles/ray.dir/Code/shapes/solvers.cpp.o"
+  "/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/shapes/sphere.cpp" "/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/build/CMakeFiles/ray.dir/Code/shapes/sphere.cpp.o"
+  "/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/shapes/triangle.cpp" "/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/build/CMakeFiles/ray.dir/Code/shapes/triangle.cpp.o"
+  "/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/triple.cpp" "/home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/build/CMakeFiles/ray.dir/Code/triple.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
