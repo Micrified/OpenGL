@@ -479,6 +479,12 @@ cmath
 /home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/shapes/sphere.h
 ../object.h
 /home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/object.h
+exception
+-
+fstream
+-
+iostream
+-
 
 /home/micrified/Documents/Academics/Third Year/Block 3/Computer Graphics/OpenGL/Lab 4/Code/shapes/triangle.cpp
 triangle.h

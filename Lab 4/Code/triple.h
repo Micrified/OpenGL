@@ -86,7 +86,7 @@ class Triple
 
 // --- Comparisons -------------------------------------------------------------
 
-        bool notEq(Triple t);
+        bool isEqual (Triple t);                // Return true if triples are equivalent.
 };
 
 // --- Free Operators ----------------------------------------------------------

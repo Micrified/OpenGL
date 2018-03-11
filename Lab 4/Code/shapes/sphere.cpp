@@ -47,19 +47,47 @@ Hit Sphere::intersect(Ray const &ray)
     return Hit(t0, N);
 }
 
+// Returns the color on the sphere for a given hit point, accounting
+// for rotation and use of textures.
 Color Sphere::getTextureColorAtPoint (Point p){
+    static bool initializedRotationInformation = false;
+    static Vector unit;
+    static Vector rotationAxis;
+    static double rotationAngle;
+
+    // Rename point coordinates variables and sphere center more conveniently.
     double x = p.x, y = p.y, z = p.z;
     double cx = position.x, cy = position.y, cz = position.z;
 
-    double theta = acos((cz - z) / r);
-    double phi = atan2(y - cy, x - cx) - this->angle;
+    // Initialization of constants for Rodrigues rotation forumla. 
+    if (initializedRotationInformation == false) {
+        rotation.normalize();
+        unit = Vector(0, 0, 1);
+        rotationAxis = rotation.cross(unit);
+        rotationAngle = acos(rotation.dot(unit));
+        rotationAxis.normalize();
+        initializedRotationInformation = true;
+    }
+    
+    // Compute vector from sphere center to hitpoint.
+    Vector v(x - cx, y - cy, z - cz);
+    
+    // If the rotation-vector is identical to the unit vector, then no rotation necessary.
+    if(!rotationAxis.isEqual(unit)) {
+       v = v * cos(rotationAngle) + (rotationAxis.cross(v)) * sin(rotationAngle) + rotationAxis * (rotationAxis.dot(v)) * (1 - cos(rotationAngle));
+    }
 
-    if(phi < 0) {
+    // Calculate texture mapping (rotated coordinate -> polar coordinate -> U,V)
+    double theta = acos((-v.z) / r);
+    double phi = atan2(v.y, v.x) - (this->angle / 180 * M_PI);
+
+    // Ensure non-negative phi.
+    while(phi < 0) {
         phi += 2 * M_PI;
     }
 
-    double u = phi / (2 * M_PI);
-    double v = (M_PI - theta) / M_PI;
+    double u_coord = phi / (2 * M_PI);
+    double v_coord = (M_PI - theta) / M_PI;
 
-    return material.texture->colorAt(u, v);
+    return material.texture->colorAt(u_coord, v_coord);
 }

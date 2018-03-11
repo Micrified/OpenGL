@@ -197,6 +197,12 @@ void Triple::clamp(double maxValue)
     b = fmin(b, maxValue);
 }
 
+// --- Comparisons -------------------------------------------------------------
+
+bool Triple::isEqual (Triple t) {
+    return (this->x == t.x && this->y == t.y && this->z == t.z);
+}
+
 // --- Free Operators ----------------------------------------------------------
 
 // NOTE: no Triple:: needed!
@@ -236,10 +242,3 @@ ostream &operator<<(ostream &os, Triple const &t)
     return os;
 }
 
-// --- Comparisons -------------------------------------------------------------
-
-
-bool Triple::notEq(Triple t)
-{
-    return x != t.x || y != t.y || z != t.z;
-}
