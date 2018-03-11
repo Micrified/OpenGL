@@ -10,6 +10,8 @@ We did encounter some anomalies when we computed this originally, which produced
 
 Reflections are computed within the `trace` method of the `Scene` class as well, and contribute towards the total illumination like shadows do. We implemented this just as suggested in the lab assignment, by recursively using the `trace` method to add illumination components from reflected rays (which also depends on the material). We had to edit our `trace` method a bit to include a `depth` parameter though.
 
+Like when implementing shadows, we also found that a lot of visual anomalies appeared if we didn't account for reflective rays bouncing off the hit object into "itself". We added in the same countermeasure as before (ignore reflections into self) and the issues were resolved.
+
 ### [Optional] Refraction
 Omitted.
 
