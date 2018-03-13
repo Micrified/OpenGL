@@ -128,12 +128,20 @@ Light Raytracer::parseLightNode(json const &node) const
 
 Material Raytracer::parseMaterialNode(json const &node) const
 {
+    if(node["useTexture"]) {
+        std::string textureLoc = node["texture"];
+        double ka = node["ka"];
+        double kd = node["kd"];
+        double ks = node["ks"];
+        double n  = node["n"];
+        return Material(Image(textureLoc), ka, kd, ks, n, true);
+    }
     Color color(node["color"]);
     double ka = node["ka"];
     double kd = node["kd"];
     double ks = node["ks"];
     double n  = node["n"];
-    return Material(color, ka, kd, ks, n);
+    return Material(color, ka, kd, ks, n, false);
 }
 
 // Custom Method which maps a object--type-string to an integer. 

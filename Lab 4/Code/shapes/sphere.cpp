@@ -39,6 +39,18 @@ Hit Sphere::intersect(Ray const &ray)
     return Hit(t0, N);
 }
 
+Color Sphere::colorAtPoint(Point const &point)
+{
+    Vector R = point - position;
+
+    double theta = acos(R.z / r);
+    double phi = atan2(R.y, R.x);
+
+    phi < 0 ? phi += 2 * M_PI : phi;
+
+    return material.texture.colorAt(phi / (2 * M_PI), (M_PI - theta) / M_PI);
+}
+
 Sphere::Sphere(Point const &pos, double radius)
 :
     position(pos),

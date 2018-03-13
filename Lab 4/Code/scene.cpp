@@ -56,9 +56,14 @@ Color Scene::trace(Ray const &ray, int depth, int ignore)
 
     Color diffuse;
     Color specular;
+    Color color;
 
+    if (material.isTextured) {
+        color = obj->colorAtPoint(hit);
+    } else {
+        color = material.color; 
+    }
 
-    Color color = material.color;   
     for(int i = 0; i < lights.size(); i++){
         Vector L = lights[i]->position - hit;
 

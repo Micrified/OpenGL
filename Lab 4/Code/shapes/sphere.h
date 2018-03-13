@@ -10,6 +10,8 @@ class Sphere: public Object
 
         virtual Hit intersect(Ray const &ray);
 
+        Color colorAtPoint(Point const &point);
+
         Point const position;
         double const r;
 };

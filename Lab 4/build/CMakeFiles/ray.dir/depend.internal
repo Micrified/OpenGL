@@ -12,6 +12,7 @@ CMakeFiles/ray.dir/Code/lode/lodepng.cpp.o
  /home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/lode/lodepng.h
 CMakeFiles/ray.dir/Code/main.cpp.o
  /home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/hit.h
+ /home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/image.h
  /home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/json/json_fwd.h
  /home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/light.h
  /home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/main.cpp
@@ -55,6 +56,7 @@ CMakeFiles/ray.dir/Code/scene.cpp.o
  /home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/triple.h
 CMakeFiles/ray.dir/Code/shapes/example.cpp.o
  /home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/hit.h
+ /home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/image.h
  /home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/json/json_fwd.h
  /home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/material.h
  /home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/object.h
@@ -67,6 +69,7 @@ CMakeFiles/ray.dir/Code/shapes/solvers.cpp.o
  /home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/shapes/solvers.h
 CMakeFiles/ray.dir/Code/shapes/sphere.cpp.o
  /home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/hit.h
+ /home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/image.h
  /home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/json/json_fwd.h
  /home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/material.h
  /home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/object.h
@@ -77,6 +80,7 @@ CMakeFiles/ray.dir/Code/shapes/sphere.cpp.o
  /home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/triple.h
 CMakeFiles/ray.dir/Code/shapes/triangle.cpp.o
  /home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/hit.h
+ /home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/image.h
  /home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/json/json_fwd.h
  /home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/material.h
  /home/s2990652/Desktop/CG/OpenGL/Lab 4/Code/object.h

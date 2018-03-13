@@ -2,6 +2,7 @@
 #define GEOMETRY_H
 
 #include <QVector3D>
+#include <QVector2D>
 #include <vector>
 #include <QOpenGLDebugLogger>
 #include <cstdlib>
