@@ -66,7 +66,7 @@ void MainView::initializeGL() {
     glEnable(GL_DEPTH_TEST);
 
     // Enable backface culling
-    glEnable(GL_CULL_FACE);
+    //glEnable(GL_CULL_FACE);
 
     // Default is GL_LESS
     glDepthFunc(GL_LEQUAL);
@@ -160,6 +160,9 @@ void MainView::setupShaderProgram (const QString &vertexShaderPath, const QStrin
 
     // Initialize sampler location (for textures).
     locationSetPointer->samplerLocation = shaderProgramPointer->uniformLocation("samplerUniform");
+
+    // Initialize elapsed time location (for wave).
+    locationSetPointer->elapsedTimeLocation = shaderProgramPointer->uniformLocation("elapsedTimeUniform");
 }
 
 // Method for setting up objects to be rendered.
@@ -196,9 +199,9 @@ void MainView::createShaderProgram()
     ****************************************************************************
     */
 
-    // Setup the normal shader.
-    setupShaderProgram(":/shaders/vertshader_normal.glsl", ":/shaders/fragshader_normal.glsl",
-                       &normalShaderProgram, &normalShaderLocationSet);
+    // Setup the wave shader.
+    setupShaderProgram(":/shaders/vertshader_wave.glsl", ":/shaders/fragshader_wave.glsl",
+                       &waveShaderProgram, &waveShaderLocationSet);
 
     // Setup the phong shader.
     setupShaderProgram(":/shaders/vertshader_phong.glsl", ":/shaders/fragshader_phong.glsl",
@@ -216,7 +219,7 @@ void MainView::createShaderProgram()
     */
 
     // DEFAULT: Model translation.
-    translationMatrix.translate({-1, 0, -3});
+    translationMatrix.translate({0, 0, -3});
 
     // DEFAULT: Perspective.
     perspectiveMatrix.perspective(60.0, width()/height(), 0.1, 10.0);
@@ -228,7 +231,7 @@ void MainView::createShaderProgram()
     */
 
     // Load in model.
-    Model model = Model(":models/cat.obj");
+    Model model = Model(":models/grid.obj");
 
     // Unitize model.
     model.unitize();
@@ -285,6 +288,9 @@ void MainView::createShaderProgram()
  */
 void MainView::paintGL() {
 
+    // Static: Elapsed time.
+    static double elapsedTime = 0.0;
+
     // Clear the screen before rendering
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -301,18 +307,13 @@ void MainView::paintGL() {
     GLuint perspectiveLocation      = activeLocationSetPointer->perspectiveLocation;
     GLuint lightCoordinateLocation  = activeLocationSetPointer->lightCoordinateLocation;
     GLuint materialLocation         = activeLocationSetPointer->materialLocation;
+    GLuint elapsedTimeLocation      = activeLocationSetPointer->elapsedTimeLocation;
 
     // SET: Lighting Coordinate.
     glUniform3fv(lightCoordinateLocation, 1, lightCoordinateVector.data());
 
     // SET: Material
     glUniform4fv(materialLocation, 1, materialVector.data());
-
-    // Animate a rotation
-    //rotation += 0.25;
-    translation += 0.1;
-    rotationMatrix.rotate(rotation, 1.0, 0.0, 0.0);
-    translationMatrix.translate(sin(translation) * 0.1, cos(translation) * 0.1, 0);
 
     // COMPUTE: Transform (translation • scale • rotation).
     QMatrix4x4 transformMatrix = translationMatrix * scaleMatrix * rotationMatrix;
@@ -329,12 +330,18 @@ void MainView::paintGL() {
     // SET: Normal-Transform.
     glUniformMatrix3fv(normalTransformLocation, 1, GL_FALSE, normalTransformMatrix.data());
 
+    // SET: Elapsed-Time.
+    glUniform1f(elapsedTimeLocation, elapsedTime);
+
     // DRAW: Model Mesh.
     glBindVertexArray(this->mesh_vao);
     glDrawArrays(GL_TRIANGLES, 0, meshVertexCount);
 
     // RELEASE: Active Shader Program.
     activeShaderProgramPointer->release();
+
+    // INCREMENT: Elapsed time by one-sixtyth of a second.
+    elapsedTime += (1.0/60.0);
 }
 
 /**
@@ -383,9 +390,9 @@ void MainView::setShadingMode(ShadingMode shading)
         activeLocationSetPointer = &phongShaderLocationSet;
         qDebug() << "Shading Mode = Phong\n";
     } else if (shading == 1) {
-        activeShaderProgramPointer = &normalShaderProgram;
-        activeLocationSetPointer = &normalShaderLocationSet;
-        qDebug() << "Shading Mode = Normal\n";
+        activeShaderProgramPointer = &waveShaderProgram;
+        activeLocationSetPointer = &waveShaderLocationSet;
+        qDebug() << "Shading Mode = Wave\n";
     } else {
         activeShaderProgramPointer = &gouraudShaderProgram;
         activeLocationSetPointer = &gouraudShaderLocationSet;

@@ -32,11 +32,14 @@ typedef struct {
     GLuint perspectiveLocation;         // Pointer to perspective transform buffer.
 
     /* CATEGORY: Lighting & Material. */
-    GLuint lightCoordinateLocation;  // Pointer to light-source coordinate buffer.
+    GLuint lightCoordinateLocation;     // Pointer to light-source coordinate buffer.
     GLuint materialLocation;            // Pointer to material data buffer.
 
     /* CATEGORY: Textures. */
     GLuint samplerLocation;             // Pointer to texture data buffer.
+
+    /* CATEGORY: Time */
+    GLuint elapsedTimeLocation;         // Pointer to the elapsed time buffer.
 
 } ShaderLocationSet;
 
@@ -69,6 +72,9 @@ class MainView : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
     // The Gouraud shader program.
     QOpenGLShaderProgram gouraudShaderProgram;
 
+    // The wavey boy
+    QOpenGLShaderProgram waveShaderProgram;
+
     /*
     ****************************************************************************
     *                          Shader Buffer Pointers                          *
@@ -83,6 +89,9 @@ class MainView : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
 
     // The set of buffer-pointers for the gouraud shader program.
     ShaderLocationSet gouraudShaderLocationSet;
+
+    // The set of buffer-pointer for the wave shader program.
+    ShaderLocationSet waveShaderLocationSet;
 
     /*
     ****************************************************************************
