@@ -3,6 +3,9 @@
 // Define constants
 #define M_PI 3.141593
 
+// The number of waves.
+#define N_WAVES 3
+
 /*
 ********************************************************************************
 *                                  Attributes                                  *
@@ -39,6 +42,15 @@ uniform vec3 lightCoordinateUniform;
 // Material Uniform: Material Properties.
 uniform vec4 materialUniform;
 
+// Amplitude of the waves.
+uniform float amplitudeUniform[N_WAVES];
+
+// Frequency of the waves.
+uniform float frequencyUniform[N_WAVES];
+
+// Phase of the waves.
+uniform float phaseUniform[N_WAVES];
+
 // Time Uniform: Elapsed time.
 uniform float elapsedTimeUniform;
 
@@ -51,7 +63,19 @@ uniform float elapsedTimeUniform;
 // Export: The adjusted vertex.
 out vec2 uvCoordinateFrag;
 
-out vec3 normal;
+// Export: The adjusted vertex.
+out vec3 adjustedVertex;
+
+// Export: The adjusted light location.
+out vec3 adjustedLightCoordinate;
+
+// Export: The adjusted normal vector.
+out vec3 adjustedNormalVector;
+
+// Export: The material.
+out vec4 material;
+
+out float height;
 
 
 /*
@@ -60,22 +84,47 @@ out vec3 normal;
 ********************************************************************************
 */
 
+float waveHeight (int waveIdx, float uvalue) {
+    float theta = 2 * M_PI * (frequencyUniform[waveIdx] * uvalue + elapsedTimeUniform + phaseUniform[waveIdx]);
+    return amplitudeUniform[waveIdx] * sin(theta);
+}
+
+float waveDU (int waveIdx, float uvalue) {
+    float theta = 2 * M_PI * (frequencyUniform[waveIdx] * uvalue + elapsedTimeUniform + phaseUniform[waveIdx]);
+    return 2 * M_PI * amplitudeUniform[waveIdx] * frequencyUniform[waveIdx] * cos(theta);
+}
+
+
 void main () {
 
+    // Copy vertexCoordinate into local variable.
     vec3 currentVertexPosition = vertexCoordinate;
 
-    float amplitude = 0.1;
-    float time = elapsedTimeUniform;
-    float phase = 0;
-    float frequency = 10;
+    // Initialize sums to zero.
+    currentVertexPosition.z = 0;
+    float du = 0;
 
-    currentVertexPosition.z = amplitude * sin(2 * M_PI * (frequency * uvCoordinate.x + time));
+    // Compute sums.
+    for(int i = 0; i < N_WAVES; i++) {
+        currentVertexPosition.z += waveHeight(i, currentVertexPosition.x);
+        du += waveDU(i, currentVertexPosition.x);
+    }
 
-    float du = 2 * M_PI * amplitude * frequency * cos(2 * M_PI * (frequency * uvCoordinate.x + time));
-
-    normal = normalTransformUniform * normalize(vec3(-du, 0, 1.0));
-
+    // Compute adjusted vertex.
     gl_Position = perspectiveUniform * vertexTransformUniform * vec4(currentVertexPosition, 1.0);
+    adjustedVertex = vec4(vertexTransformUniform * vec4(currentVertexPosition, 1.0)).xyz;
+
+    // Compute adjusted light location.
+    adjustedLightCoordinate = vec4(vertexTransformUniform * vec4(lightCoordinateUniform, 1.0)).xyz;
+
+    // Compute adjusted normal vector.
+    adjustedNormalVector = normalTransformUniform * normalize(vec3(-du, 0, 1.0));
+
+    // Copy over material.
+    material = materialUniform;
 
     uvCoordinateFrag = uvCoordinate;
+
+    height = currentVertexPosition.z;
+
 }

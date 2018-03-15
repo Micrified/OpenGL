@@ -3,6 +3,9 @@
 // Define constants
 #define M_PI 3.141593
 
+// The number of waves.
+#define N_WAVES 3
+
 /*
 ********************************************************************************
 *                                  Attributes                                  *
@@ -38,6 +41,15 @@ uniform vec3 lightCoordinateUniform;
 
 // Material Uniform: Material Properties.
 uniform vec4 materialUniform;
+
+// Amplitude of the waves.
+uniform float amplitudeUniform[N_WAVES];
+
+// Frequency of the waves.
+uniform float frequencyUniform[N_WAVES];
+
+// Phase of the waves.
+uniform float phaseUniform[N_WAVES];
 
 // Time Uniform: Elapsed time.
 uniform float elapsedTimeUniform;

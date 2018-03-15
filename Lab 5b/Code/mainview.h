@@ -17,6 +17,9 @@
 #include "vertex.h"
 #include "geometry.h"
 
+// The number of waves: ENSURE IN SYNC WITH VERT-SHADER USING WAVES.
+#define N_WAVES 3
+
 /*
 ********************************************************************************
 *                                 Data Types                                   *
@@ -37,6 +40,11 @@ typedef struct {
 
     /* CATEGORY: Textures. */
     GLuint samplerLocation;             // Pointer to texture data buffer.
+
+    /* CATEGORY: Waves  */
+    GLuint amplitudeLocation;           // Pointer to amplitude of waves.
+    GLuint frequencyLocation;           // Pointer to frequency of waves.
+    GLuint phaseLocation;               // Pointer to phase of waves.
 
     /* CATEGORY: Time */
     GLuint elapsedTimeLocation;         // Pointer to the elapsed time buffer.
@@ -208,6 +216,15 @@ private:
     // The rotation factor.
     float rotation = 1.0;
     float translation = 0.1;
+
+    // Buffer containing wave amplitudes.
+    float amplitudes[N_WAVES] = {0.135, 0.00, 0.00};
+
+    // Buffer containing wave frequency.
+    float frequencies[N_WAVES] = {1.0, 7.0, 4.0};
+
+    // Buffer containing wave phases.
+    float phases[N_WAVES] = {1.5, 1.0, 0.75};
 
 };
 

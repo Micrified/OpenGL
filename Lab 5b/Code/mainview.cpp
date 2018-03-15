@@ -161,6 +161,15 @@ void MainView::setupShaderProgram (const QString &vertexShaderPath, const QStrin
     // Initialize sampler location (for textures).
     locationSetPointer->samplerLocation = shaderProgramPointer->uniformLocation("samplerUniform");
 
+    // Initialize amplitude location (for wave).
+    locationSetPointer->amplitudeLocation = shaderProgramPointer->uniformLocation("amplitudeUniform");
+
+    // Initialize frequency location (for wave).
+    locationSetPointer->frequencyLocation = shaderProgramPointer->uniformLocation("frequencyUniform");
+
+    // Initialize amplitude location (for wave).
+    locationSetPointer->phaseLocation = shaderProgramPointer->uniformLocation("phaseUniform");
+
     // Initialize elapsed time location (for wave).
     locationSetPointer->elapsedTimeLocation = shaderProgramPointer->uniformLocation("elapsedTimeUniform");
 }
@@ -254,10 +263,10 @@ void MainView::createShaderProgram()
     */
 
     // Set the location of the light.
-    lightCoordinateVector = std::vector<float>{2.0, 2.0, 2.0};
+    lightCoordinateVector = std::vector<float>{-2.0, 0.0, 2.0};
 
     // Set the material of the cute cat.
-    materialVector = std::vector<float>{0.5, 0.9, 0.9, 64.0};
+    materialVector = std::vector<float>{0.2, 0.5, 0.6, 64.0};
 
     /*
     ****************************************************************************
@@ -267,6 +276,19 @@ void MainView::createShaderProgram()
 
     // Load in and setup the kitty texture.
     loadTexture(":/textures/cat_diff.png");
+
+
+    /*
+    ****************************************************************************
+    *                               Setup Waves                                *
+    ****************************************************************************
+    */
+
+    // Initialize wave equation components.
+    //amplitudes  = {0.5, 1.0, 1.5};
+   // frequencies = {1.0, 10.0, 4.0};
+    //phases      = {1.0, 0.5, 0.75};
+
 
     /*
     ****************************************************************************
@@ -308,6 +330,9 @@ void MainView::paintGL() {
     GLuint lightCoordinateLocation  = activeLocationSetPointer->lightCoordinateLocation;
     GLuint materialLocation         = activeLocationSetPointer->materialLocation;
     GLuint elapsedTimeLocation      = activeLocationSetPointer->elapsedTimeLocation;
+    GLuint amplitudeLocation        = activeLocationSetPointer->amplitudeLocation;
+    GLuint frequencyLocation        = activeLocationSetPointer->frequencyLocation;
+    GLuint phaseLocation            = activeLocationSetPointer->phaseLocation;
 
     // SET: Lighting Coordinate.
     glUniform3fv(lightCoordinateLocation, 1, lightCoordinateVector.data());
@@ -329,6 +354,11 @@ void MainView::paintGL() {
 
     // SET: Normal-Transform.
     glUniformMatrix3fv(normalTransformLocation, 1, GL_FALSE, normalTransformMatrix.data());
+
+    // SET: Wave Amplitude, Frequency, and Phase
+    glUniform1fv(amplitudeLocation, N_WAVES, amplitudes);
+    glUniform1fv(frequencyLocation, N_WAVES, frequencies);
+    glUniform1fv(phaseLocation, N_WAVES, phases);
 
     // SET: Elapsed-Time.
     glUniform1f(elapsedTimeLocation, elapsedTime);
