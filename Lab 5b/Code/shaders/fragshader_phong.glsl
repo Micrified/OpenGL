@@ -3,20 +3,16 @@
 // Define constants
 #define M_PI 3.141593
 
-/*
-********************************************************************************
-*                                   Uniforms                                   *
-********************************************************************************
-*/
-
-// Sampler Uniform:
-uniform sampler2D samplerUniform;
 
 /*
 ********************************************************************************
 *                              Imported Variables                              *
 ********************************************************************************
 */
+
+
+// Import: The (u,v) coordinate.
+in vec2 uvCoordinateFrag;
 
 // Import: The adjusted vertex.
 in vec3 adjustedVertex;
@@ -30,8 +26,7 @@ in vec3 adjustedNormalVector;
 // Import: The material.
 in vec4 material;
 
-// Import: The texture coordinate.
-in vec2 fragmentTextureCoordinate;
+in float height;
 
 /*
 ********************************************************************************
@@ -51,15 +46,15 @@ out vec4 fColor;
 void main ()
 {
     // Extract material components.
-    float ka = material[0], kd = material[1], ks = material[2], n = material[3];
+    float ka = 0.2, kd = 0.8, ks = 0.8, n = 64;
 
     // Assign N: The adjusted normal.
-    vec3 N = adjustedNormalVector;
+    vec3 N = normalize(adjustedNormalVector);
 
     // Compute L: Vector from point to light coordinate.
     vec3 L = normalize(adjustedLightCoordinate - adjustedVertex);
 
-    // Compute V: Our viewing vector (set to 0,0,0).
+    // Compute V: Our viewing angle (set to 0,0,0).
     vec3 V = normalize(adjustedVertex - vec3(0.0, 0.0, 0.0));
 
     // Compute R: The reflected L vector using our adjusted normal.
@@ -77,9 +72,12 @@ void main ()
     // Total illumination.
     float i = ambient + diffuse + specular;
 
-    // Get texture color.
-    vec4 textureColor = texture2D(samplerUniform, fragmentTextureCoordinate);
+    // Somehow blend in wave color here.
 
-    // Apply Phong Shading.
-    fColor = textureColor * i;
+    float s = smoothstep(-0.2, 0.2, height);
+
+    vec3 colour = mix(vec3(0,0,1), vec3(1,1,1), s);
+
+    // Apply uv Shading.
+    fColor = vec4(colour, 1.0) * i;
 }

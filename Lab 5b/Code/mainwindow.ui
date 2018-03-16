@@ -239,14 +239,14 @@
           <item>
            <widget class="QRadioButton" name="NormalButton">
             <property name="text">
-             <string>Nor&amp;mal</string>
+             <string>Wave Nor&amp;mal</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QRadioButton" name="GouraudButton">
             <property name="text">
-             <string>&amp;Gouraud</string>
+             <string>&amp;UVCoordinate</string>
             </property>
            </widget>
           </item>

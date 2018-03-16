@@ -3,12 +3,6 @@
 // Define constants
 #define M_PI 3.141593
 
-/*
-********************************************************************************
-*                                   Uniforms                                   *
-********************************************************************************
-*/
-
 
 /*
 ********************************************************************************
@@ -16,8 +10,10 @@
 ********************************************************************************
 */
 
-// Import: The vertex color to be rendered.
-in vec3 vertexColor;
+
+// Import: The (u,v) coordinate.
+in vec2 uvCoordinateFrag;
+
 
 /*
 ********************************************************************************
@@ -36,8 +32,6 @@ out vec4 fColor;
 
 void main ()
 {
-
-    // Compute the color as a function of the transformed normal vector.
-    fColor = vec4(vertexColor * 0.5 + 0.5, 1.0);
-
+    // Apply uv Shading.
+    fColor = vec4(uvCoordinateFrag, 0.0, 1.0);
 }

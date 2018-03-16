@@ -86,57 +86,6 @@ void MainView::initializeGL() {
 ********************************************************************************
 */
 
-// Method for converting an texture image to bytes.
-QVector<quint8> MainView::imageToBytes(QImage image) {
-    // needed since (0,0) is bottom left in OpenGL
-    QImage im = image.mirrored();
-    QVector<quint8> pixelData;
-    pixelData.reserve(im.width()*im.height()*4);
-
-    for (int i = 0; i != im.height(); ++i) {
-        for (int j = 0; j != im.width(); ++j) {
-            QRgb pixel = im.pixel(j,i);
-
-            // pixel is of format #AARRGGBB (in hexadecimal notation)
-            // so with bitshifting and binary AND you can get
-            // the values of the different components
-            quint8 r = (quint8)((pixel >> 16) & 0xFF); // Red component
-            quint8 g = (quint8)((pixel >> 8) & 0xFF); // Green component
-            quint8 b = (quint8)(pixel & 0xFF); // Blue component
-            quint8 a = (quint8)((pixel >> 24) & 0xFF); // Alpha component
-
-            // Add them to the Vector
-            pixelData.append(r);
-            pixelData.append(g);
-            pixelData.append(b);
-            pixelData.append(a);
-        }
-    }
-    return pixelData;
-}
-
-// Method for loading in a texture. Uses global texturePointer to store texture.
-void MainView::loadTexture (QString file) {
-
-    // Generate a texture.
-    glGenTextures(1, &texturePointer);
-
-    // Prepare to use the texture.
-    glBindTexture(GL_TEXTURE_2D, texturePointer);
-
-    // Setup texture interpretation.
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-    // Load in the texture and convert to bytes.
-    QImage image = QImage(file);
-    QVector<quint8> imageBytes = imageToBytes(image);
-
-    // Upload the data.
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, image.width(), image.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, imageBytes.data());
-}
 
 // Method for setting up a shader program.
 void MainView::setupShaderProgram (const QString &vertexShaderPath, const QString &fragmentShaderPath, QOpenGLShaderProgram *shaderProgramPointer, ShaderLocationSet *locationSetPointer) {
@@ -157,9 +106,6 @@ void MainView::setupShaderProgram (const QString &vertexShaderPath, const QStrin
     // Initialize the light coordinate, and the material properties.
     locationSetPointer->lightCoordinateLocation = shaderProgramPointer->uniformLocation("lightCoordinateUniform");
     locationSetPointer->materialLocation = shaderProgramPointer->uniformLocation("materialUniform");
-
-    // Initialize sampler location (for textures).
-    locationSetPointer->samplerLocation = shaderProgramPointer->uniformLocation("samplerUniform");
 
     // Initialize amplitude location (for wave).
     locationSetPointer->amplitudeLocation = shaderProgramPointer->uniformLocation("amplitudeUniform");
@@ -209,7 +155,7 @@ void MainView::createShaderProgram()
     */
 
     // Setup the wave shader.
-    setupShaderProgram(":/shaders/vertshader_wave.glsl", ":/shaders/fragshader_wave.glsl",
+    setupShaderProgram(":/shaders/vertshader_waveNormal.glsl", ":/shaders/fragshader_waveNormal.glsl",
                        &waveShaderProgram, &waveShaderLocationSet);
 
     // Setup the phong shader.
@@ -217,7 +163,7 @@ void MainView::createShaderProgram()
                        &phongShaderProgram, &phongShaderLocationSet);
 
     // Setup the gouraud shader.
-    setupShaderProgram(":/shaders/vertshader_gouraud.glsl", ":/shaders/fragshader_gouraud.glsl",
+    setupShaderProgram(":/shaders/vertshader_uvCoordinate.glsl", ":/shaders/fragshader_uvCoordinate.glsl",
                        &gouraudShaderProgram, &gouraudShaderLocationSet);
 
 
@@ -268,26 +214,7 @@ void MainView::createShaderProgram()
     // Set the material of the cute cat.
     materialVector = std::vector<float>{0.2, 0.5, 0.6, 64.0};
 
-    /*
-    ****************************************************************************
-    *                               Upload Texture                             *
-    ****************************************************************************
-    */
 
-    // Load in and setup the kitty texture.
-    loadTexture(":/textures/cat_diff.png");
-
-
-    /*
-    ****************************************************************************
-    *                               Setup Waves                                *
-    ****************************************************************************
-    */
-
-    // Initialize wave equation components.
-    //amplitudes  = {0.5, 1.0, 1.5};
-   // frequencies = {1.0, 10.0, 4.0};
-    //phases      = {1.0, 0.5, 0.75};
 
 
     /*
@@ -318,10 +245,6 @@ void MainView::paintGL() {
 
     // BIND: Active Shader Program.
     activeShaderProgramPointer->bind();
-
-    // Bind textures.
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texturePointer);
 
     // Obtain Active Locations.
     GLuint vertexTransformLocation  = activeLocationSetPointer->vertexTransformLocation;

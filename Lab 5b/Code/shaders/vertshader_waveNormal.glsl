@@ -4,7 +4,7 @@
 #define M_PI 3.141593
 
 // The number of waves.
-#define N_WAVES 3
+#define N_WAVES 8
 
 /*
 ********************************************************************************
@@ -15,12 +15,11 @@
 // Vertex Coordinates.
 layout (location = 0) in vec3 vertexCoordinate;
 
-// Normal Vector or color. Depends which // The number of waves.
-#define N_WAVES 3it is being used for.
+// Normal Vector or color. Depends which it is being used for.
 layout (location = 1) in vec3 normalVector;
 
-// Texture Coordiantes.
-layout (location = 2) in vec2 textureCoordinate;
+// uv Coordiantes.
+layout (location = 2) in vec2 uvCoordinate;
 
 /*
 ********************************************************************************
@@ -61,8 +60,10 @@ uniform float elapsedTimeUniform;
 ********************************************************************************
 */
 
-// Export: Color to be rendered in fragment shader.
-out vec3 vertexColor;
+// Export: The adjusted normal vector.
+out vec3 adjustedNormalVector;
+
+
 
 /*
 ********************************************************************************
@@ -70,12 +71,36 @@ out vec3 vertexColor;
 ********************************************************************************
 */
 
+float waveHeight (int waveIdx, float uvalue) {
+    float theta = 2 * M_PI * (frequencyUniform[waveIdx] * uvalue + elapsedTimeUniform + phaseUniform[waveIdx]);
+    return amplitudeUniform[waveIdx] * sin(theta);
+}
+
+float waveDU (int waveIdx, float uvalue) {
+    float theta = 2 * M_PI * (frequencyUniform[waveIdx] * uvalue + elapsedTimeUniform + phaseUniform[waveIdx]);
+    return 2 * M_PI * amplitudeUniform[waveIdx] * frequencyUniform[waveIdx] * cos(theta);
+}
+
+
 void main () {
 
-    // Compute vertex position.
-    gl_Position = perspectiveUniform * vertexTransformUniform * vec4(vertexCoordinate, 1.0);
+    // Copy vertexCoordinate into local variable.
+    vec3 currentVertexPosition = vertexCoordinate;
 
-    // Compute the transformed normal vector as the color.
-    vertexColor = normalize(normalTransformUniform * normalVector);
+    // Initialize sums to zero.
+    currentVertexPosition.z = 0;
+    float du = 0;
+
+    // Compute sums.
+    for(int i = 0; i < N_WAVES; i++) {
+        currentVertexPosition.z += waveHeight(i, currentVertexPosition.x);
+        du += waveDU(i, currentVertexPosition.x);
+    }
+
+    // Compute adjusted vertex.
+    gl_Position = perspectiveUniform * vertexTransformUniform * vec4(currentVertexPosition, 1.0);
+
+    // Compute adjusted normal vector.
+    adjustedNormalVector = normalTransformUniform * normalize(vec3(-du, 0, 1.0));
 
 }

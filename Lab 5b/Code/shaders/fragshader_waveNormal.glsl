@@ -3,14 +3,6 @@
 // Define constants
 #define M_PI 3.141593
 
-/*
-********************************************************************************
-*                                   Uniforms                                   *
-********************************************************************************
-*/
-
-// Sampler Uniform:
-uniform sampler2D samplerUniform;
 
 /*
 ********************************************************************************
@@ -18,11 +10,9 @@ uniform sampler2D samplerUniform;
 ********************************************************************************
 */
 
-// Import: The illumination constant.
-in float i;
+// Import: The adjusted normal vector.
+in vec3 adjustedNormalVector;
 
-// Import: The texture coordinate.
-in vec2 fragmentTextureCoordinate;
 
 /*
 ********************************************************************************
@@ -41,11 +31,6 @@ out vec4 fColor;
 
 void main ()
 {
-
-    // Get texture color.
-    vec4 textureColor = texture2D(samplerUniform, fragmentTextureCoordinate);
-
-    // Compute the color as a function of the transformed normal vector.
-    fColor = textureColor * i;
-
+    // Apply uv Shading.
+    fColor = vec4(normalize(adjustedNormalVector), 1.0);
 }

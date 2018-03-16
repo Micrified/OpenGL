@@ -18,7 +18,7 @@
 #include "geometry.h"
 
 // The number of waves: ENSURE IN SYNC WITH VERT-SHADER USING WAVES.
-#define N_WAVES 3
+#define N_WAVES 8
 
 /*
 ********************************************************************************
@@ -37,9 +37,6 @@ typedef struct {
     /* CATEGORY: Lighting & Material. */
     GLuint lightCoordinateLocation;     // Pointer to light-source coordinate buffer.
     GLuint materialLocation;            // Pointer to material data buffer.
-
-    /* CATEGORY: Textures. */
-    GLuint samplerLocation;             // Pointer to texture data buffer.
 
     /* CATEGORY: Waves  */
     GLuint amplitudeLocation;           // Pointer to amplitude of waves.
@@ -133,12 +130,6 @@ public:
     ****************************************************************************
     */
 
-    // Method for converting an texture image to bytes.
-    QVector<quint8> imageToBytes(QImage image);
-
-    // Method for loading in a texture. Uses global texturePointer to store texture.
-    void loadTexture (QString file);
-
     // Method for setting up a shader program.
     void setupShaderProgram (const QString &, const QString &, QOpenGLShaderProgram *, ShaderLocationSet *);
 
@@ -185,9 +176,6 @@ private:
     // Lighting coordinate.
     std::vector<float> lightCoordinateVector;
 
-    // Texture pointer.
-    GLuint texturePointer;
-
     /*
     ********************************************************************************
     *                            Scene Object Transform                            *
@@ -218,13 +206,13 @@ private:
     float translation = 0.1;
 
     // Buffer containing wave amplitudes.
-    float amplitudes[N_WAVES] = {0.135, 0.00, 0.00};
+    float amplitudes[N_WAVES] = {0.001, 0.002, 0.003, 0.004, 0.005, 0.006, 0.008};
 
     // Buffer containing wave frequency.
-    float frequencies[N_WAVES] = {1.0, 7.0, 4.0};
+    float frequencies[N_WAVES] = {8.0, 7.0, 6.0, 5.0, 4.0, 3.0, 2.0, 1.0};
 
     // Buffer containing wave phases.
-    float phases[N_WAVES] = {1.5, 1.0, 0.75};
+    float phases[N_WAVES] = {1.5, 1.0, 0.75, 5.0, 4.0, 3.0, 2.0, 1.0};
 
 };
 

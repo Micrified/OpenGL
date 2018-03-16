@@ -8,11 +8,9 @@
         <file>textures/rug_logo.png</file>
         <file>models/cat.obj</file>
         <file>models/sphere.obj</file>
-        <file>shaders/fragshader_gouraud.glsl</file>
-        <file>shaders/fragshader_normal.glsl</file>
+        <file>shaders/fragshader_uvCoordinate.glsl</file>
         <file>shaders/fragshader_phong.glsl</file>
-        <file>shaders/vertshader_gouraud.glsl</file>
-        <file>shaders/vertshader_normal.glsl</file>
+        <file>shaders/vertshader_uvCoordinate.glsl</file>
         <file>shaders/vertshader_phong.glsl</file>
         <file>geometry.cpp</file>
         <file>geometry.h</file>
@@ -28,7 +26,7 @@
         <file>vertex.h</file>
         <file>models/windmill_structure.obj</file>
         <file>models/grid.obj</file>
-        <file>shaders/fragshader_wave.glsl</file>
-        <file>shaders/vertshader_wave.glsl</file>
+        <file>shaders/fragshader_waveNormal.glsl</file>
+        <file>shaders/vertshader_waveNormal.glsl</file>
     </qresource>
 </RCC>
