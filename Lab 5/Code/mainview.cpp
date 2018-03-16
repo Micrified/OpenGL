@@ -28,10 +28,10 @@ MainView::~MainView() {
     debugLogger->stopLogging();
 
     // 1. Delete the buffers.
-    glDeleteBuffers(1, &mesh_vbo);
+    //glDeleteBuffers(1, &mesh_vbo);
 
     // 2. Delete the vertex arrays.
-    glDeleteVertexArrays(1, &mesh_vao);
+    //glDeleteVertexArrays(1, &mesh_vao);
 
     qDebug() << "MainView destructor";
 }
@@ -116,13 +116,13 @@ QVector<quint8> MainView::imageToBytes(QImage image) {
 }
 
 // Method for loading in a texture. Uses global texturePointer to store texture.
-void MainView::loadTexture (QString file) {
+void MainView::loadTexture (QString file, GLuint *texturePointer) {
 
     // Generate a texture.
-    glGenTextures(1, &texturePointer);
+    glGenTextures(1, texturePointer);
 
     // Prepare to use the texture.
-    glBindTexture(GL_TEXTURE_2D, texturePointer);
+    glBindTexture(GL_TEXTURE_2D, *texturePointer);
 
     // Setup texture interpretation.
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -189,6 +189,7 @@ void MainView::setupVertexObject(GLuint *vbo, GLuint *vao, std::vector<vertex> d
 
 void MainView::createShaderProgram()
 {
+    qDebug() << "Creating Shader Program";
 
     /*
     ****************************************************************************
@@ -208,7 +209,7 @@ void MainView::createShaderProgram()
     setupShaderProgram(":/shaders/vertshader_gouraud.glsl", ":/shaders/fragshader_gouraud.glsl",
                        &gouraudShaderProgram, &gouraudShaderLocationSet);
 
-
+    qDebug() << "Shader Programs setup";
     /*
     ****************************************************************************
     *                  Setup Initial Model/Perspective Transforms              *
@@ -216,7 +217,7 @@ void MainView::createShaderProgram()
     */
 
     // DEFAULT: Model translation.
-    translationMatrix.translate({-1, 0, -3});
+    //translationMatrix.translate({-1, 0, -3});
 
     // DEFAULT: Perspective.
     perspectiveMatrix.perspective(60.0, width()/height(), 0.1, 10.0);
@@ -226,22 +227,59 @@ void MainView::createShaderProgram()
     *                              Load-In Model(s)                            *
     ****************************************************************************
     */
+    ModelObject             *modelObject;
+    std::vector<vertex>     mesh;
 
-    // Load in model.
-    Model model = Model(":models/cat.obj");
+    // --------------------- Object 1 --------------------
 
-    // Unitize model.
-    model.unitize();
+    // Set local modelObject.
+    modelObject = &sceneObjects[0];
+
+    // Load in model and unitize.
+    Model model = Model(":models/Bananas.obj"); model.unitize();
 
     // Translate model mesh to vector.
-    std::vector<vertex> mesh = vectorFrom3D(model.getVertices(), model.getNormals(),
-                                            model.getTextureCoords());
+    mesh = vectorFrom3D(model.getVertices(), model.getNormals(), model.getTextureCoords());
 
     // Set the model vertex count.
-    meshVertexCount = mesh.size();
+    modelObject->meshVertexCount = mesh.size();
+
+    modelObject->translationMatrix.translate(0, -2.0, -6.0);
+
+    qDebug() << "Model Loaded, setting vertex object";
 
     // Prepare model to be shown in scene.
-    setupVertexObject(&mesh_vbo, &mesh_vao, mesh);
+    setupVertexObject(&modelObject->mesh_vbo, &modelObject->mesh_vao, mesh);
+
+    loadTexture(":/textures/Bananas.png", &modelObject->texturePointer);
+
+    modelObject->materialVector = std::vector<float>{0.5, 0.9, 0.9, 64.0};
+
+
+    // --------------------- Object 2 --------------------
+
+    // Set local modelObject.
+    modelObject = &sceneObjects[1];
+
+    // Load in model and unitize.
+    model = Model(":models/Bananas.obj"); model.unitize();
+
+    // Translate model mesh to vector.
+    mesh = vectorFrom3D(model.getVertices(), model.getNormals(), model.getTextureCoords());
+
+    // Set the model vertex count.
+    modelObject->meshVertexCount = mesh.size();
+
+    modelObject->translationMatrix.translate(0, 2.0, -6.0);
+
+    qDebug() << "Model Loaded, setting vertex object";
+
+    // Prepare model to be shown in scene.
+    setupVertexObject(&modelObject->mesh_vbo, &modelObject->mesh_vao, mesh);
+
+    loadTexture(":/textures/Bananas.png", &modelObject->texturePointer);
+
+    modelObject->materialVector = std::vector<float>{0.5, 0.9, 0.9, 64.0};
 
 
     /*
@@ -254,7 +292,9 @@ void MainView::createShaderProgram()
     lightCoordinateVector = std::vector<float>{2.0, 2.0, 2.0};
 
     // Set the material of the cute cat.
-    materialVector = std::vector<float>{0.5, 0.9, 0.9, 64.0};
+    //materialVector = std::vector<float>{0.5, 0.9, 0.9, 64.0};
+
+
 
     /*
     ****************************************************************************
@@ -263,7 +303,8 @@ void MainView::createShaderProgram()
     */
 
     // Load in and setup the kitty texture.
-    loadTexture(":/textures/cat_diff.png");
+    //loadTexture(":/textures/Bananas.png");
+
 
     /*
     ****************************************************************************
@@ -291,48 +332,62 @@ void MainView::paintGL() {
     // BIND: Active Shader Program.
     activeShaderProgramPointer->bind();
 
-    // Bind textures.
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texturePointer);
+    for(int i = 0; i < 2; i++){
 
-    // Obtain Active Locations.
-    GLuint vertexTransformLocation  = activeLocationSetPointer->vertexTransformLocation;
-    GLuint normalTransformLocation  = activeLocationSetPointer->normalTransformLocation;
-    GLuint perspectiveLocation      = activeLocationSetPointer->perspectiveLocation;
-    GLuint lightCoordinateLocation  = activeLocationSetPointer->lightCoordinateLocation;
-    GLuint materialLocation         = activeLocationSetPointer->materialLocation;
+        // EXTRACT OBJECT TO BE RENDERED.
+        ModelObject *modelObject = &sceneObjects[i];
+        GLuint texturePointer = modelObject->texturePointer;
+        std::vector<float> materialVector = modelObject->materialVector;
+        GLuint mesh_vao = modelObject->mesh_vao;
+        int meshVertexCount = modelObject->meshVertexCount;
+        QMatrix4x4 translationMatrix = modelObject->translationMatrix;
+        QMatrix4x4 rotationMatrix = modelObject->rotationMatrix;
+        QMatrix4x4 scaleMatrix = modelObject->scaleMatrix;
 
-    // SET: Lighting Coordinate.
-    glUniform3fv(lightCoordinateLocation, 1, lightCoordinateVector.data());
 
-    // SET: Material
-    glUniform4fv(materialLocation, 1, materialVector.data());
+        // Bind textures.
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texturePointer);
 
-    // Animate a rotation
-    //rotation += 0.25;
-    translation += 0.1;
-    rotationMatrix.rotate(rotation, 1.0, 0.0, 0.0);
-    translationMatrix.translate(sin(translation) * 0.1, cos(translation) * 0.1, 0);
+        // Obtain Active Locations.
+        GLuint vertexTransformLocation  = activeLocationSetPointer->vertexTransformLocation;
+        GLuint normalTransformLocation  = activeLocationSetPointer->normalTransformLocation;
+        GLuint perspectiveLocation      = activeLocationSetPointer->perspectiveLocation;
+        GLuint lightCoordinateLocation  = activeLocationSetPointer->lightCoordinateLocation;
+        GLuint materialLocation         = activeLocationSetPointer->materialLocation;
 
-    // COMPUTE: Transform (translation • scale • rotation).
-    QMatrix4x4 transformMatrix = translationMatrix * scaleMatrix * rotationMatrix;
+        // SET: Lighting Coordinate.
+        glUniform3fv(lightCoordinateLocation, 1, lightCoordinateVector.data());
 
-    // COMPUTE: Normal-Transform. (CHECK THIS IS CORRECT?)
-    QMatrix3x3 normalTransformMatrix = transformMatrix.normalMatrix();
+        // SET: Material
+        glUniform4fv(materialLocation, 1, materialVector.data());
 
-    // SET: Transform.
-    glUniformMatrix4fv(vertexTransformLocation, 1, GL_FALSE, transformMatrix.data());
+        // Animate a rotation
+        //rotation += 0.25;
+        //translation += 0.1;
+        //rotationMatrix.rotate(rotation, 1.0, 0.0, 0.0);
+        //translationMatrix.translate(sin(translation) * 0.1, cos(translation) * 0.1, 0);
 
-    // SET: Perspective.
-    glUniformMatrix4fv(perspectiveLocation, 1, GL_FALSE, perspectiveMatrix.data());
+        // COMPUTE: Transform (translation • scale • rotation).
+        QMatrix4x4 transformMatrix = translationMatrix * scaleMatrix * rotationMatrix;
 
-    // SET: Normal-Transform.
-    glUniformMatrix3fv(normalTransformLocation, 1, GL_FALSE, normalTransformMatrix.data());
+        // COMPUTE: Normal-Transform. (CHECK THIS IS CORRECT?)
+        QMatrix3x3 normalTransformMatrix = transformMatrix.normalMatrix();
 
-    // DRAW: Model Mesh.
-    glBindVertexArray(this->mesh_vao);
-    glDrawArrays(GL_TRIANGLES, 0, meshVertexCount);
+        // SET: Transform.
+        glUniformMatrix4fv(vertexTransformLocation, 1, GL_FALSE, transformMatrix.data());
 
+        // SET: Perspective.
+        glUniformMatrix4fv(perspectiveLocation, 1, GL_FALSE, perspectiveMatrix.data());
+
+        // SET: Normal-Transform.
+        glUniformMatrix3fv(normalTransformLocation, 1, GL_FALSE, normalTransformMatrix.data());
+
+        // DRAW: Model Mesh.
+        glBindVertexArray(mesh_vao);
+        glDrawArrays(GL_TRIANGLES, 0, meshVertexCount);
+
+    }
     // RELEASE: Active Shader Program.
     activeShaderProgramPointer->release();
 }
@@ -359,18 +414,18 @@ void MainView::resizeGL(int newWidth, int newHeight)
 void MainView::setRotation(int rotateX, int rotateY, int rotateZ)
 {
     qDebug() << "Rotation changed to (" << rotateX << "," << rotateY << "," << rotateZ << ")";
-    rotationMatrix.setToIdentity();
-    rotationMatrix.rotate((float)rotateX, 1.0, 0, 0);
-    rotationMatrix.rotate((float)rotateY, 0, 1.0, 0);
-    rotationMatrix.rotate((float)rotateZ, 0, 0, 1.0);
+    sceneObjects[0].rotationMatrix.setToIdentity();
+    sceneObjects[0].rotationMatrix.rotate((float)rotateX, 1.0, 0, 0);
+    sceneObjects[0].rotationMatrix.rotate((float)rotateY, 0, 1.0, 0);
+    sceneObjects[0].rotationMatrix.rotate((float)rotateZ, 0, 0, 1.0);
     update();
 }
 
 void MainView::setScale(int scale)
 {
     qDebug() << "Scale changed to " << scale;
-    scaleMatrix.setToIdentity();
-    scaleMatrix.scale((float)scale/100);
+    sceneObjects[0].scaleMatrix.setToIdentity();
+    sceneObjects[0].scaleMatrix.scale((float)scale/100);
     update();
 }
 

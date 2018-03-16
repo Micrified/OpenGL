@@ -31,6 +31,6 @@ out vec4 fColor;
 
 void main ()
 {
-    // Apply uv Shading.
+    // Apply normal Shading.
     fColor = vec4(normalize(adjustedNormalVector), 1.0);
 }

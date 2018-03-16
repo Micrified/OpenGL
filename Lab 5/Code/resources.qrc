@@ -27,5 +27,9 @@
         <file>vertex.cpp</file>
         <file>vertex.h</file>
         <file>models/windmill_structure.obj</file>
+        <file>models/statue.obj</file>
+        <file>textures/statue_diff2.png</file>
+        <file>textures/Bananas.png</file>
+        <file>models/Bananas.obj</file>
     </qresource>
 </RCC>

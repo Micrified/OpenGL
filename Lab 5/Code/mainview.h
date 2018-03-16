@@ -16,6 +16,7 @@
 #include <vector>
 #include "vertex.h"
 #include "geometry.h"
+#include "modelobject.h"
 
 /*
 ********************************************************************************
@@ -119,8 +120,8 @@ public:
     // Method for converting an texture image to bytes.
     QVector<quint8> imageToBytes(QImage image);
 
-    // Method for loading in a texture. Uses global texturePointer to store texture.
-    void loadTexture (QString file);
+    // Method for loading in a texture. Uses texturePointer to store texture.
+    void loadTexture (QString file, GLuint *texturePointer);
 
     // Method for setting up a shader program.
     void setupShaderProgram (const QString &, const QString &, QOpenGLShaderProgram *, ShaderLocationSet *);
@@ -152,24 +153,33 @@ private:
 
     /*
     ********************************************************************************
+    *                                Scene Objects                                 *
+    ********************************************************************************
+    */
+
+    // Objects in the scene.
+    ModelObject sceneObjects[4];
+
+    /*
+    ********************************************************************************
     *                              Scene Object Data                               *
     ********************************************************************************
     */
 
     // Mesh vertex count.
-    GLuint meshVertexCount;
+    //GLuint meshVertexCount;
 
     // Mesh VBO and VAO.
-    GLuint mesh_vbo, mesh_vao;
+    //GLuint mesh_vbo, mesh_vao;
 
     // Mesh Material: (ka, kd, ks, n).
-    std::vector<float> materialVector;
+    //std::vector<float> materialVector;
 
     // Lighting coordinate.
     std::vector<float> lightCoordinateVector;
 
     // Texture pointer.
-    GLuint texturePointer;
+    //GLuint texturePointer;
 
     /*
     ********************************************************************************
@@ -178,13 +188,13 @@ private:
     */
 
     // Matrix representing the current translation.
-    QMatrix4x4 translationMatrix;
+    //QMatrix4x4 translationMatrix;
 
     // Matrix representing the current rotation.
-    QMatrix4x4 rotationMatrix;
+    //QMatrix4x4 rotationMatrix;
 
     // Matrix representing the current scale.
-    QMatrix4x4 scaleMatrix;
+    //QMatrix4x4 scaleMatrix;
 
     // Matrix representing the current perspective.
     QMatrix4x4 perspectiveMatrix;
@@ -197,8 +207,8 @@ private:
     */
 
     // The rotation factor.
-    float rotation = 1.0;
-    float translation = 0.1;
+    //float rotation = 1.0;
+    //float translation = 0.1;
 
 };
 

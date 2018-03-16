@@ -18,13 +18,15 @@ SOURCES += main.cpp\
     user_input.cpp \
     model.cpp \
     vertex.cpp \
-    geometry.cpp
+    geometry.cpp \
+    modelobject.cpp
 
 HEADERS  += mainwindow.h \
     mainview.h \
     model.h \
     vertex.h \
-    geometry.h
+    geometry.h \
+    modelobject.h
 
 FORMS    += mainwindow.ui
 
