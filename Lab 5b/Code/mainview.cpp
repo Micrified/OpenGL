@@ -214,9 +214,6 @@ void MainView::createShaderProgram()
     // Set the material of the cute cat.
     materialVector = std::vector<float>{0.2, 0.5, 0.6, 64.0};
 
-
-
-
     /*
     ****************************************************************************
     *                       Setup Initial Shader Program                       *
@@ -293,7 +290,7 @@ void MainView::paintGL() {
     // RELEASE: Active Shader Program.
     activeShaderProgramPointer->release();
 
-    // INCREMENT: Elapsed time by one-sixtyth of a second.
+    // INCREMENT: Elapsed time by one-sixtith of a second.
     elapsedTime += (1.0/60.0);
 }
 
