@@ -32,8 +32,12 @@ The following changes were made in order to achieve this scene.
 The most important aspect of our changes were the transform functions, which describe how an object moves between calls to `paintGL`. All transform functions are written in the `ModelObject` class as standard functions (they are not instance or class functions of `ModelObject`). We write a function for each object we wish to transform, each only requiring a time parameter and pointer to a `ModelObject` instance. When setting up our `ModelObject` instances, we assign to their `transform` variable the function we want it to use. Within the `paintGL` loop, we have only to invoke the function saved in the object to have it transform itself.
 We finally touched off by modifying our `setScale` and `setRotation` methods in `MainView` to apply changes to the scene's scale and rotation matrices. These matrices are then applied along with each scene object's individual transformations in order to uniformly scale and rotate the scene.
 
+### Issues.
+
+We had a persisting problem with screen tearing occuring. This can be seen in several screenshots. Namely `scene_1.png` and `scene_4.png`.
+
 ### Key Shortcuts.
 None.
 
 ### Bonus Assignments.
-Unitisation of a model (in model class) was implemented (again).
+None.
