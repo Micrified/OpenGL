@@ -39,7 +39,7 @@ In the screenshot Normals/StaticVActiveNormals, the static normals (on the left)
 None.
 
 ### Bonus Assignments.
-Unitisation of a model (in model class) was implemented (again). 
+While no interactive game was made, you can still play a passive game where you count the number of rotations the moon has made around the earth.
 
 ### Feedback.
-There is very little mentioned in the documents about using OpenGL's methods. Most of it is confusing to us and still doesn't really make much sense. It just works/magic is usually the explanation.
+We had trouble finding models to use that had textures. We also aren't sure how to handle complex models we occasionally come across with multiple parts and textures.

@@ -33,6 +33,9 @@ uniform mat3 normalTransformUniform;
 // Perspective Uniform: Viewing Perspective.
 uniform mat4 perspectiveUniform;
 
+// Scene Uniform: Transform (Rotation, Translation).
+uniform mat4 sceneTransformUniform;
+
 // Lighting Uniform: Light Source Coordinate.
 uniform vec3 lightCoordinateUniform;
 
@@ -73,7 +76,7 @@ void main () {
     adjustedVertex = vec4(vertexTransformUniform * vec4(vertexCoordinate, 1.0)).xyz;
 
     // Compute adjusted light location.
-    adjustedLightCoordinate = vec4(vertexTransformUniform * vec4(lightCoordinateUniform, 1.0)).xyz;
+    adjustedLightCoordinate = vec4(sceneTransformUniform * vec4(lightCoordinateUniform, 1.0)).xyz;
 
     // Compute adjusted normal vector.
     adjustedNormalVector = normalize(normalTransformUniform * normalVector);

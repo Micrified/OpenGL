@@ -18,6 +18,9 @@
 #include "geometry.h"
 #include "modelobject.h"
 
+// Number of scene objects.
+#define N_SCENE_OBJECTS     4
+
 /*
 ********************************************************************************
 *                                 Data Types                                   *
@@ -32,8 +35,11 @@ typedef struct {
     GLuint normalTransformLocation;     // Pointer to normal transform buffer.
     GLuint perspectiveLocation;         // Pointer to perspective transform buffer.
 
+    /* CATEGORY: Scene */
+    GLuint sceneTransformLocation;      // Pointer to scene rotation buffer.
+
     /* CATEGORY: Lighting & Material. */
-    GLuint lightCoordinateLocation;  // Pointer to light-source coordinate buffer.
+    GLuint lightCoordinateLocation;     // Pointer to light-source coordinate buffer.
     GLuint materialLocation;            // Pointer to material data buffer.
 
     /* CATEGORY: Textures. */
@@ -158,7 +164,7 @@ private:
     */
 
     // Objects in the scene.
-    ModelObject sceneObjects[4];
+    ModelObject sceneObjects[N_SCENE_OBJECTS];
 
     /*
     ********************************************************************************
@@ -166,20 +172,8 @@ private:
     ********************************************************************************
     */
 
-    // Mesh vertex count.
-    //GLuint meshVertexCount;
-
-    // Mesh VBO and VAO.
-    //GLuint mesh_vbo, mesh_vao;
-
-    // Mesh Material: (ka, kd, ks, n).
-    //std::vector<float> materialVector;
-
     // Lighting coordinate.
     std::vector<float> lightCoordinateVector;
-
-    // Texture pointer.
-    //GLuint texturePointer;
 
     /*
     ********************************************************************************
@@ -187,18 +181,17 @@ private:
     ********************************************************************************
     */
 
-    // Matrix representing the current translation.
-    //QMatrix4x4 translationMatrix;
-
-    // Matrix representing the current rotation.
-    //QMatrix4x4 rotationMatrix;
-
-    // Matrix representing the current scale.
-    //QMatrix4x4 scaleMatrix;
-
     // Matrix representing the current perspective.
     QMatrix4x4 perspectiveMatrix;
 
+    // Matrix representing the current rotation of the scene.
+    QMatrix4x4 sceneRotationMatrix;
+
+    // Matrix representing the translation of the scene.
+    QMatrix4x4 sceneTranslationMatrix;
+
+    // Matrix representing the scaling of the scene.
+    QMatrix4x4 sceneScaleMatrix;
 
     /*
     ********************************************************************************
@@ -206,9 +199,7 @@ private:
     ********************************************************************************
     */
 
-    // The rotation factor.
-    //float rotation = 1.0;
-    //float translation = 0.1;
+    float time = 0;
 
 };
 

@@ -33,6 +33,9 @@ uniform mat3 normalTransformUniform;
 // Perspective Uniform: Viewing Perspective.
 uniform mat4 perspectiveUniform;
 
+// Scene Uniform: Rotation.
+uniform mat4 sceneRotationUniform;
+
 // Lighting Uniform: Light Source Coordinate.
 uniform vec3 lightCoordinateUniform;
 

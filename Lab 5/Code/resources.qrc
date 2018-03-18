@@ -31,5 +31,10 @@
         <file>textures/statue_diff2.png</file>
         <file>textures/Bananas.png</file>
         <file>models/Bananas.obj</file>
+        <file>textures/earth.png</file>
+        <file>textures/mars.png</file>
+        <file>models/rock.obj</file>
+        <file>textures/rock.png</file>
+        <file>textures/moon.png</file>
     </qresource>
 </RCC>

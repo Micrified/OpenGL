@@ -1,15 +1,12 @@
 #ifndef MODELOBJECT_H
 #define MODELOBJECT_H
-#include <QKeyEvent>
-#include <QMouseEvent>
+
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions_3_3_Core>
 #include <QOpenGLDebugLogger>
 #include <QOpenGLShaderProgram>
-#include <QTimer>
 #include <QVector3D>
 #include <memory>
-
 
 class ModelObject
 {
@@ -35,6 +32,9 @@ public:
     // Texture pointer.
     GLuint texturePointer;
 
+    // Transform function pointer.
+    QMatrix4x4 (*transform)(float time, void *modelObject);
+
     /*
     ********************************************************************************
     *                              Object Transform                                *
@@ -53,6 +53,9 @@ public:
     // Matrix representing the current scale.
     QMatrix4x4 scaleMatrix;
 
+    // Function to get the transform matrix at a given time
+    QMatrix4x4 transformMatrix(float t);
+
 
     /*
     ********************************************************************************
@@ -61,13 +64,27 @@ public:
     */
 
     // Function for setting animation settings.
-    void setAnimationFactors (float rotation, float translation);
+    void setAnimationFactors (float rotx, float roty, float rotz, float transx, float transy, float transz);
 
     // The rotation factor.
-    float rotation = 1.0;
+    float rotation[3] = {5.0, 5.0, 0};
 
     // The translation factor.
-    float translation = 0.1;
+    float translation[3] = {1.1, 1.0, 1.0};
+
+    float radius;
 };
+
+// Transformation Function: Earth
+QMatrix4x4 transform_Earth(float time, void *modelObject);
+
+// Transformation Function: Moon
+QMatrix4x4 transform_Moon(float time, void *modelObject);
+
+// Transformation Function: Compound Orbit
+QMatrix4x4 transform_CompoundOrbit(float time, void *modelObject);
+
+// Transformation Function: Incoming Rock
+QMatrix4x4 transform_IncomingRock(float time, void *modelObject);
 
 #endif // MODELOBJECT_H
